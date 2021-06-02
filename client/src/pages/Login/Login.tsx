@@ -2,12 +2,15 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
-import { FormikHelpers } from 'formik';
 import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+import { FormikHelpers } from 'formik';
+
 import useStyles from './useStyles';
 import login from '../../helpers/APICalls/login';
 import LoginForm from './LoginForm/LoginForm';
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
+import AuthDemo from '../../components/AuthDemo/AuthDemo';
 import { useAuth } from '../../context/useAuthContext';
 import { useSnackBar } from '../../context/useSnackbarContext';
 
@@ -41,7 +44,6 @@ export default function Login(): JSX.Element {
       <CssBaseline />
       <Grid item xs={12} sm={8} md={7} elevation={6} component={Paper} square>
         <Box className={classes.authWrapper}>
-          <AuthHeader linkTo="/signup" asideText="Don't have an account?" btnText="Create account" />
           <Box width="100%" maxWidth={450} p={3} alignSelf="center">
             <Grid container>
               <Grid item xs>
@@ -51,9 +53,11 @@ export default function Login(): JSX.Element {
               </Grid>
             </Grid>
             <LoginForm handleSubmit={handleSubmit} />
+            <AuthDemo />
           </Box>
-          <Box p={1} alignSelf="center" />
         </Box>
+        <Divider />
+        <AuthHeader linkTo="/signup" asideText="Don't have an account?" btnText="Create" />
       </Grid>
     </Grid>
   );
