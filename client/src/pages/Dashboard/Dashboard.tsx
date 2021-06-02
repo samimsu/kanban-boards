@@ -12,6 +12,9 @@ import useStyles from './useStyles';
 // import { useEffect } from 'react';
 import DashboardHeader from '../../components/DashboardHeader/DashboardHeader';
 import DashboardAppBar from '../../components/DashboardAppBar/DashboardAppBar';
+import BoardUI from '../../components/BoardUI/BoardUI';
+import CreateBoardDialog from '../../components/CreateBoardDialog/CreateBoardDialog'
+import CreateColumnDialog from '../../components/CreateColumnDialog/CreateColumnDialog'
 
 export default function Dashboard(): JSX.Element {
   const classes = useStyles();
@@ -40,8 +43,21 @@ export default function Dashboard(): JSX.Element {
         <DashboardHeader />
         <DashboardAppBar />
       </Grid>
+
+      <Grid item>
+        <CreateBoardDialog />
+      </Grid>
+
+      <Grid item>
+      <CreateColumnDialog />
+      </Grid>
       
-      {/*<Board />*/}
+      
+      <Grid item xs={12}>
+        <BoardUI />
+      </Grid>
+
+      
       
       {/*<Grid item className={classes.drawerWrapper}>
         <ChatSideBanner loggedInUser={loggedInUser} />
