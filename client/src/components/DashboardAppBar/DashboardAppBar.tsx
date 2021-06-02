@@ -8,18 +8,19 @@ import Menu from '@material-ui/core/Menu';
 const DashboardAppBar = (): JSX.Element => {
 
   return (
-    <AppBar>
-        <Toolbar>
-          <Typography>
-            My School Board
-          </Typography>
+    <AppBar position="static">
+      <Toolbar>
+        <Typography>
+          My School Board
+        </Typography>
 
-          <IconButton>
-            <MenuIcon />
-            <Menu open={false}></Menu>
-          </IconButton>
-        </Toolbar>
-      </AppBar>
+        <IconButton>
+          <MenuIcon />
+          <Menu open={false}></Menu>
+        </IconButton>
+      </Toolbar>
+      
+    </AppBar>
   );
 };
 
