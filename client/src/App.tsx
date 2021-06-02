@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 import Login from './pages/Login/Login';
 import Signup from './pages/SignUp/SignUp';
 import Dashboard from './pages/Dashboard/Dashboard';
+import BoardUI from './components/BoardUI/BoardUI';
 // import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
@@ -15,20 +16,22 @@ function App(): JSX.Element {
     <MuiThemeProvider theme={theme}>
       <BrowserRouter>
         <SnackBarProvider>
-          {/*<AuthProvider>*/}
-            <SocketProvider>
-              <Switch>
-                <Route exact path="/login" component={Login} />
-                <Route exact path="/signup" component={Signup} />
-                <Route exact path="/dashboard">
-                  <Dashboard />
-                </Route>
-                <Route path="*">
-                  <Redirect to="/login" />
-                </Route>
-              </Switch>
-            </SocketProvider>
-          {/*</AuthProvider>*/}
+          {/* Commented out AuthProvider to prevent redirect to Login page */}
+          {/* <AuthProvider> */}
+          <SocketProvider>
+            <Switch>
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/signup" component={Signup} />
+              <Route exact path="/dashboard">
+                <Dashboard />
+              </Route>
+              <Route exact path="/board-ui" component={BoardUI} />
+              <Route path="*">
+                <Redirect to="/login" />
+              </Route>
+            </Switch>
+          </SocketProvider>
+          {/* </AuthProvider> */}
         </SnackBarProvider>
       </BrowserRouter>
     </MuiThemeProvider>
