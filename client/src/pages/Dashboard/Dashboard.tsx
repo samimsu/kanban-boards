@@ -13,8 +13,10 @@ import useStyles from './useStyles';
 import DashboardHeader from '../../components/DashboardHeader/DashboardHeader';
 import DashboardAppBar from '../../components/DashboardAppBar/DashboardAppBar';
 import BoardUI from '../../components/BoardUI/BoardUI';
-import CreateBoardDialog from '../../components/CreateBoardDialog/CreateBoardDialog'
-import CreateColumnDialog from '../../components/CreateColumnDialog/CreateColumnDialog'
+/* import CreateBoardDialog from '../../components/CreateBoardDialog/CreateBoardDialog';
+import CreateColumnDialog from '../../components/CreateColumnDialog/CreateColumnDialog';
+import IconButton from '@material-ui/core/IconButton';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'; */
 
 export default function Dashboard(): JSX.Element {
   const classes = useStyles();
@@ -44,21 +46,24 @@ export default function Dashboard(): JSX.Element {
         <DashboardAppBar />
       </Grid>
 
-      <Grid item>
+      {/* <Grid item xs={1}>
         <CreateBoardDialog />
       </Grid>
 
-      <Grid item>
+      <Grid item xs={11}>
       <CreateColumnDialog />
       </Grid>
       
+      <Grid item xs={1}>
+        <IconButton className={classes.addColumnButton}>
+          <AddCircleOutlineIcon />
+        </IconButton>
+      </Grid> */}
       
-      <Grid item xs={12}>
+      <Grid item xs={11}>
         <BoardUI />
       </Grid>
-
-      
-      
+    
       {/*<Grid item className={classes.drawerWrapper}>
         <ChatSideBanner loggedInUser={loggedInUser} />
       </Grid>*/}

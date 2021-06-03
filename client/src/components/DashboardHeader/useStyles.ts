@@ -1,57 +1,36 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const drawerWidth = 240;
+const primaryColor = '#759CFC';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     header: {
         display: 'flex',
         flexDirection: 'row',
         flexWrap: 'nowrap',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginTop: 10,
-        marginBottom: 10,
-        marginLeft: 50,
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 50,
     },
-    createBoard: {
+    dashboardButton: {
+        color: primaryColor,
+        marginRight: 15,
+    },
+    calendarButton: {
+        marginLeft: 15,
+    },
+    createBoardButton: {
+        backgroundColor: primaryColor,
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingRight: 20,
+        paddingLeft: 20,
     },
     avatar: {
         alignSelf: 'flex-end',
         marginLeft: 50,
         marginRight: 50,
-    },
-    chatSideBanner: {
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100vh',
-        padding: '1rem 1rem',
-        width: drawerWidth,
-        [theme.breakpoints.up('md')]: {
-        padding: '2rem 2rem',
-        width: '300px',
-        },
-    },
-    userPanel: {
-        display: 'flex',
-        alignItems: 'center',
-        marginBottom: '2rem',
-    },
-    userText: {
-        fontWeight: 700,
-        paddingLeft: '1rem',
-        fontSize: 16,
-    },
-    chatTitle: {
-        fontWeight: 700,
-        fontSize: 20,
-        margin: '1rem 0',
-    },
-    chatSummaryContainer: { overflowY: 'auto', marginTop: '1rem' },
-    newChatBtn: {
-        margin: '1rem 0',
-    },
-    noChatToSelectText: {
-        margin: '1rem 0',
     },
 }));
 
