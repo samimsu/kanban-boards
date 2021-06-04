@@ -6,6 +6,8 @@
     "test": "test"
   },
   "scripts": {
+    "format": "prettier --write \"src/**/*.{js,jsx}\"",
+    "lint": "eslint \"src/**/*.{js,jsx}\" --quiet",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon ./bin/www"
   },
@@ -27,7 +29,10 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
-    "mocha": "^8.2.1"
+    "eslint": "^7.27.0",
+    "eslint-config-prettier": "^8.3.0",
+    "mocha": "^8.2.1",
+    "prettier": "^2.3.0"
   },
   "author": "",
   "license": "ISC"
