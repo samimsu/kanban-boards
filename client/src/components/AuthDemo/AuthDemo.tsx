@@ -1,5 +1,4 @@
 import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { Formik, FormikHelpers } from 'formik';
 import { CircularProgress } from '@material-ui/core';
@@ -42,6 +41,7 @@ const AuthDemo = (): JSX.Element => {
       }}
       onSubmit={handleSubmit}
     >
+      {/*eslint-disable-next-line*/}
       {({ handleSubmit, handleChange, values, touched, errors, isSubmitting }) => (
         <form onSubmit={handleSubmit} className={classes.form} noValidate>
           <Box textAlign="right">
