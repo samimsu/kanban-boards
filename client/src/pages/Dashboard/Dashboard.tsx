@@ -37,7 +37,7 @@ export default function Dashboard(): JSX.Element {
         <DashboardHeader />
         <DashboardAppBar />
       </Grid>
-    
+
       <Grid item className={classes.drawerWrapper}>
         <ChatSideBanner loggedInUser={loggedInUser} />
       </Grid>
