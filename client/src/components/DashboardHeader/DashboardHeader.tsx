@@ -7,7 +7,7 @@ import AddIcon from '@material-ui/icons/Add';
 import Avatar from '@material-ui/core/Avatar';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import logo from '../../Images/logo.png'
+import logo from '../../Images/logo.png';
 import useStyles from './useStyles';
 
 const DashboardHeader = (): JSX.Element => {
@@ -26,7 +26,7 @@ const DashboardHeader = (): JSX.Element => {
       <Box flexGrow={1}>
         <img src={logo} alt="Logo" />
       </Box>
-        
+
       <Box flexGrow={1} justifyContent={'space-between'}>
         <Button className={classes.dashboardButton} startIcon={<DashboardOutlinedIcon />}>
           Dashboard
@@ -43,14 +43,12 @@ const DashboardHeader = (): JSX.Element => {
       </Box>
 
       <Box>
-        <Avatar className={classes.avatar} alt="avatar" onClick={handleClick}>S</Avatar>
-        <Menu
-            anchorEl={anchorEl} 
-            open={open}
-            onClose={handleClose}
-        >
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
-                <MenuItem onClick={handleClose}>Go to profile</MenuItem>
+        <Avatar className={classes.avatar} alt="avatar" onClick={handleClick}>
+          S
+        </Avatar>
+        <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+          <MenuItem onClick={handleClose}>Logout</MenuItem>
+          <MenuItem onClick={handleClose}>Go to profile</MenuItem>
         </Menu>
       </Box>
     </Box>

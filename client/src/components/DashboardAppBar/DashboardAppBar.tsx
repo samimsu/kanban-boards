@@ -22,19 +22,13 @@ const DashboardAppBar = (): JSX.Element => {
   return (
     <AppBar className={classes.appbar}>
       <Toolbar className={classes.toolbar}>
-        <Typography>
-          My School Board
-        </Typography>
+        <Typography className={classes.boardTitle}>My School Board</Typography>
 
         <IconButton onClick={handleClick}>
-          <MenuIcon className={classes.menuIcon}/>
+          <MenuIcon className={classes.menuIcon} />
         </IconButton>
-        <Menu
-            anchorEl={anchorEl} 
-            open={open}
-            onClose={handleClose}
-          >
-            <MenuItem onClick={handleClose}>My School Board</MenuItem>
+        <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+          <MenuItem onClick={handleClose}>My School Board</MenuItem>
         </Menu>
       </Toolbar>
     </AppBar>
