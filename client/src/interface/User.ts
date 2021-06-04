@@ -1,8 +1,8 @@
 export interface User {
-	email: string;
+  email: string;
 }
 
 export interface SearchUsersApiData {
-	users?: User[];
-	error?: { message: string };
+  users?: User[];
+  error?: { message: string };
 }
