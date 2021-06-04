@@ -1,4 +1,6 @@
 const User = require("../models/User");
+const Column = require("../models/Column");
+const Board = require("../models/Board");
 const asyncHandler = require("express-async-handler");
 const generateToken = require("../utils/generateToken");
 
@@ -22,10 +24,26 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
     throw new Error("A user with that username already exists");
   }
 
+  // A new board already comes with the "in progress" and "completed" columns and is created for the user when they sign up
+  const inProgressColumn = await Column.create({
+    title: "In Progress",
+    cards: [],
+  });
+
+  const completedColumn = await Column.create({
+    title: "Completed",
+    cards: [],
+  });
+
+  const board = await Board.create({
+    columns: [inProgressColumn, completedColumn],
+  });
+
   const user = await User.create({
     username,
     email,
-    password
+    password,
+    board,
   });
 
   if (user) {
@@ -34,7 +52,7 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      maxAge: secondsInWeek * 1000
+      maxAge: secondsInWeek * 1000,
     });
 
     res.status(201).json({
@@ -42,9 +60,10 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
         user: {
           id: user._id,
           username: user.username,
-          email: user.email
-        }
-      }
+          email: user.email,
+          board: user.board,
+        },
+      },
     });
   } else {
     res.status(400);
@@ -66,7 +85,7 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      maxAge: secondsInWeek * 1000
+      maxAge: secondsInWeek * 1000,
     });
 
     res.status(200).json({
@@ -74,9 +93,9 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
         user: {
           id: user._id,
           username: user.username,
-          email: user.email
-        }
-      }
+          email: user.email,
+        },
+      },
     });
   } else {
     res.status(401);
@@ -100,9 +119,9 @@ exports.loadUser = asyncHandler(async (req, res, next) => {
       user: {
         id: user._id,
         username: user.username,
-        email: user.email
-      }
-    }
+        email: user.email,
+      },
+    },
   });
 });
 
