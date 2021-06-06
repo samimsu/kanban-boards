@@ -88,12 +88,17 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
       maxAge: secondsInWeek * 1000,
     });
 
+    const fullBoardById = await Board.findById(user.board)
+      .populate({ path: "columns", populate: { path: "cards" } })
+      .exec();
+
     res.status(200).json({
       success: {
         user: {
           id: user._id,
           username: user.username,
           email: user.email,
+          board: fullBoardById,
         },
       },
     });
