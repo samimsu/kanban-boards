@@ -19,32 +19,14 @@ exports.createCard = asyncHandler(async (req, res, next) => {
   }
 });
 
-// @route POST /card/updateName
-// @desc Update a card name
+// @route POST /card/update
+// @desc Update an entire card
 // @access Private
-exports.updateCardName = asyncHandler(async (req, res, next) => {
+exports.updateCard = asyncHandler(async (req, res, next) => {
   try {
-    const newCardName = req.body.cardName;
-    const card = await Card.findById(req.body.cardId).exec();
-    card.name = newCardName;
-    await Card.findByIdAndUpdate(req.body.cardId, card).exec();
-    res.status(200).json(card);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send(err);
-  }
-});
-
-// @route POST /card/updateDescription
-// @desc Update a card description
-// @access Private
-exports.updateCardDescription = asyncHandler(async (req, res, next) => {
-  try {
-    const newCardDescription = req.body.cardDescription;
-    const card = await Card.findById(req.body.cardId).exec();
-    card.description = newCardDescription;
-    await Card.findByIdAndUpdate(req.body.cardId, card).exec();
-    res.status(200).json(card);
+    const newCard = req.body.newCard;
+    await Card.findByIdAndUpdate(req.body.newCard._id, newCard).exec();
+    res.status(200).json(newCard);
   } catch (err) {
     console.error(err);
     res.status(500).send(err);
