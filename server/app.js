@@ -11,6 +11,9 @@ const logger = require("morgan");
 
 const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
+const boardRouter = require("./routes/board");
+const columnRouter = require("./routes/column");
+const cardRouter = require("./routes/card");
 
 const { json, urlencoded } = express;
 
@@ -20,11 +23,11 @@ const server = http.createServer(app);
 
 const io = socketio(server, {
   cors: {
-    origin: "*"
-  }
+    origin: "*",
+  },
 });
 
-io.on("connection", socket => {
+io.on("connection", (socket) => {
   console.log("connected");
 });
 
@@ -43,6 +46,9 @@ app.use((req, res, next) => {
 
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
+app.use("/board", boardRouter);
+app.use("/column", columnRouter);
+app.use("/card", cardRouter);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/client/build")));
