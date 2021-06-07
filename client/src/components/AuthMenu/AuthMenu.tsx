@@ -1,9 +1,16 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, MouseEvent } from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { useAuth } from '../../context/useAuthContext';
+
+declare global {
+  interface Window {
+    cloudinary: any;
+  }
+}
 
 const AuthMenu = (): JSX.Element => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -23,6 +30,24 @@ const AuthMenu = (): JSX.Element => {
     logout();
   };
 
+  const openWidget = () => {
+    // create the Cloudinary upload widget
+    window.cloudinary
+      .createUploadWidget(
+        {
+          cloudName: process.env.REACT_APP_CLOUDINARY_CLOUD_NAME,
+          uploadPreset: process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET,
+        },
+        (error: any, { event, info }: any) => {
+          if (event === 'success') {
+            console.log('Image URL:', info.secure_url);
+            console.log(`An image of ${info.original_filename}`);
+          }
+        },
+      )
+      .open(); // opens upload dialog after widget creation
+  };
+
   return (
     <div>
       <IconButton aria-label="show auth menu" aria-controls="auth-menu" aria-haspopup="true" onClick={handleClick}>
@@ -40,6 +65,9 @@ const AuthMenu = (): JSX.Element => {
         }}
         getContentAnchorEl={null}
       >
+        <MenuItem className="btn widget-btn" onClick={openWidget}>
+          Add photo
+        </MenuItem>
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
     </div>
