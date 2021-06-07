@@ -19,7 +19,7 @@ exports.createColumn = asyncHandler(async (req, res, next) => {
   }
 });
 
-// @route POST /column/updateTitle
+// @route PUT /column/updateTitle
 // @desc Update a column title
 // @access Private
 exports.updateColumnTitle = asyncHandler(async (req, res, next) => {

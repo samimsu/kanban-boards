@@ -19,7 +19,7 @@ exports.createCard = asyncHandler(async (req, res, next) => {
   }
 });
 
-// @route POST /card/update
+// @route PUT /card/update
 // @desc Update an entire card
 // @access Private
 exports.updateCard = asyncHandler(async (req, res, next) => {

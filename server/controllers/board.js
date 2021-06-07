@@ -16,7 +16,7 @@ exports.fullBoardById = asyncHandler(async (req, res, next) => {
   }
 });
 
-// @route POST /board/update
+// @route PUT /board/update
 // @desc Update board by reordering columns and/or cards
 // @access Private
 exports.updateBoard = asyncHandler(async (req, res, next) => {
