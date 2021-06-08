@@ -67,8 +67,8 @@ const AuthMenu = (): JSX.Element => {
         }}
         getContentAnchorEl={null}
       >
-        <MenuItem className="btn widget-btn" onClick={openWidget}>
-          Add photo
+        <MenuItem className="widget-btn" onClick={openWidget}>
+          Change profile picture
         </MenuItem>
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
