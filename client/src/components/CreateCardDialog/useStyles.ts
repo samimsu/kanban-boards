@@ -44,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
   createButton: {
+    color: 'white',
     paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: 40,
