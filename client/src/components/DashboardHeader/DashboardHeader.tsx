@@ -9,6 +9,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import logo from '../../Images/logo.png';
 import useStyles from './useStyles';
+import CreateBoardDialog from '../CreateBoardDialog/CreateBoardDialog';
 
 const DashboardHeader = (): JSX.Element => {
   const classes = useStyles();
@@ -19,6 +20,16 @@ const DashboardHeader = (): JSX.Element => {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const [createBoardOpen, setCreateBoardOpen] = React.useState(false);
+
+  const handleClickCreateBoard = () => {
+    setCreateBoardOpen(true);
+  };
+
+  const handleCloseCreateBoard = () => {
+    setCreateBoardOpen(false);
   };
 
   return (
@@ -37,9 +48,16 @@ const DashboardHeader = (): JSX.Element => {
       </Box>
 
       <Box>
-        <Button className={classes.createBoardButton} startIcon={<AddIcon />} color="primary" variant="contained">
+        <Button
+          className={classes.createBoardButton}
+          onClick={handleClickCreateBoard}
+          startIcon={<AddIcon />}
+          color="primary"
+          variant="contained"
+        >
           Create board
         </Button>
+        <CreateBoardDialog createBoardOpen={createBoardOpen} handleCloseCreateBoard={handleCloseCreateBoard} />
       </Box>
 
       <Box>
