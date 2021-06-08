@@ -16,6 +16,12 @@ const useStyles = makeStyles((theme) => ({
       width: '300px',
     },
   },
+  addColumnButton: {
+    height: 300,
+    width: 50,
+    borderRadius: 1,
+    backgroundColor: 'lightGrey',
+  },
 }));
 
 export default useStyles;
