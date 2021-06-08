@@ -15,7 +15,7 @@ declare global {
 const AuthMenu = (): JSX.Element => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const { logout } = useAuth();
+  const { logout, loggedInUser, updateUser } = useAuth();
 
   const handleClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -39,9 +39,11 @@ const AuthMenu = (): JSX.Element => {
           uploadPreset: process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET,
         },
         (error: any, { event, info }: any) => {
-          if (event === 'success') {
-            console.log('Image URL:', info.secure_url);
-            console.log(`An image of ${info.original_filename}`);
+          if (event === 'success' && loggedInUser != null) {
+            updateUser({
+              ...loggedInUser,
+              profilePicture: info.secure_url,
+            });
           }
         },
       )
