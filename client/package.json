@@ -29,6 +29,8 @@
     "yup": "^0.32.8"
   },
   "scripts": {
+    "prepare": "husky install",
+    "prestart": "npm run lint",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
