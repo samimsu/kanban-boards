@@ -51,6 +51,14 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: 40,
     backgroundColor: '#759CFC',
   },
+  addCardButton: {
+    color: 'white',
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingLeft: 20,
+    paddingRight: 20,
+    backgroundColor: '#759CFC',
+  },
 }));
 
 export default useStyles;

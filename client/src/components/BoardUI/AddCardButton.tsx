@@ -1,6 +1,7 @@
 import React from 'react';
 import useStyles from './useStyles';
 import Button from '@material-ui/core/Button';
+import CreateCardDialog from '../CreateCardDialog/CreateCardDialog';
 
 // interface Props {
 //   // createBoardOpen: boolean;
@@ -12,9 +13,10 @@ const AddCardButton = (): JSX.Element => {
 
   return (
     <div>
-      <Button className={classes.addCardButton} variant="outlined" color="primary">
-        Add card
+      <Button variant="outlined" color="primary">
+        Add a card
       </Button>
+      <CreateCardDialog />
     </div>
   );
 };

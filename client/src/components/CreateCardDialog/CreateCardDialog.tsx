@@ -25,8 +25,8 @@ const CreateCardDialog = (): JSX.Element => {
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Create card
+      <Button className={classes.addCardButton} variant="outlined" color="primary" onClick={handleClickOpen}>
+        Add a card
       </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <Box className={classes.dialog}>

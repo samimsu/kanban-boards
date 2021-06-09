@@ -45,14 +45,6 @@ const useStyles = makeStyles(() => ({
     background: '#fcfcfc',
     boxShadow: '2px 2px grey',
   },
-  addCardButton: {
-    color: 'white',
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingLeft: 40,
-    paddingRight: 40,
-    backgroundColor: '#759CFC',
-  },
 }));
 
 export default useStyles;
