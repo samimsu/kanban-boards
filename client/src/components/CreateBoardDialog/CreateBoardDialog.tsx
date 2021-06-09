@@ -18,21 +18,9 @@ interface Props {
 
 const CreateBoardDialog = ({ createBoardOpen, handleCloseCreateBoard }: Props): JSX.Element => {
   const classes = useStyles();
-  // const [open, setOpen] = React.useState(false);
-
-  // const handleClickOpen = () => {
-  //   setOpen(true);
-  // };
-
-  // const handleClose = () => {
-  //   setOpen(false);
-  // };
 
   return (
     <div>
-      {/* <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Create board
-      </Button> */}
       <Dialog open={createBoardOpen} onClose={handleCloseCreateBoard} aria-labelledby="form-dialog-title">
         <Box className={classes.dialog}>
           <IconButton className={classes.closeButton} aria-label="close" onClick={handleCloseCreateBoard}>

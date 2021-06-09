@@ -11,26 +11,19 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 
-const CreateColumnDialog = (): JSX.Element => {
+interface Props {
+  createColumnOpen: boolean;
+  handleCloseCreateColumn: () => void;
+}
+
+const CreateColumnDialog = ({ createColumnOpen, handleCloseCreateColumn }: Props): JSX.Element => {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Create column
-      </Button>
-      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+      <Dialog open={createColumnOpen} onClose={handleCloseCreateColumn} aria-labelledby="form-dialog-title">
         <Box className={classes.dialog}>
-          <IconButton className={classes.closeButton} aria-label="close" onClick={handleClose}>
+          <IconButton className={classes.closeButton} aria-label="close" onClick={handleCloseCreateColumn}>
             <CloseIcon />
           </IconButton>
           <DialogTitle id="form-dialog-title">
@@ -48,7 +41,12 @@ const CreateColumnDialog = (): JSX.Element => {
             </TextField>
           </DialogContent>
           <DialogActions className={classes.actions}>
-            <Button className={classes.createButton} onClick={handleClose} color="primary" variant="contained">
+            <Button
+              className={classes.createButton}
+              onClick={handleCloseCreateColumn}
+              color="primary"
+              variant="contained"
+            >
               Create
             </Button>
           </DialogActions>

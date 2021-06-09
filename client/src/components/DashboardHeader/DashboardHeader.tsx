@@ -14,15 +14,15 @@ import CreateBoardDialog from '../CreateBoardDialog/CreateBoardDialog';
 const DashboardHeader = (): JSX.Element => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [createBoardOpen, setCreateBoardOpen] = React.useState(false);
   const open = Boolean(anchorEl);
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  const [createBoardOpen, setCreateBoardOpen] = React.useState(false);
 
   const handleClickCreateBoard = () => {
     setCreateBoardOpen(true);
