@@ -8,20 +8,13 @@ const generateToken = require("../utils/generateToken");
 // @desc Register user
 // @access Public
 exports.registerUser = asyncHandler(async (req, res, next) => {
-  const { username, email, password } = req.body;
+  const { email, password } = req.body;
 
   const emailExists = await User.findOne({ email });
 
   if (emailExists) {
     res.status(400);
     throw new Error("A user with that email already exists");
-  }
-
-  const usernameExists = await User.findOne({ username });
-
-  if (usernameExists) {
-    res.status(400);
-    throw new Error("A user with that username already exists");
   }
 
   // A new board already comes with the "in progress" and "completed" columns and is created for the user when they sign up
@@ -40,7 +33,6 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
   });
 
   const user = await User.create({
-    username,
     email,
     password,
     board,
@@ -59,7 +51,6 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
       success: {
         user: {
           id: user._id,
-          username: user.username,
           email: user.email,
           board: user.board,
         },
@@ -96,7 +87,6 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
       success: {
         user: {
           id: user._id,
-          username: user.username,
           email: user.email,
           board: fullBoardById,
         },
@@ -123,7 +113,6 @@ exports.loadUser = asyncHandler(async (req, res, next) => {
     success: {
       user: {
         id: user._id,
-        username: user.username,
         email: user.email,
       },
     },
