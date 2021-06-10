@@ -5,6 +5,7 @@ import Card from './Card';
 import withDroppable from './withDroppable';
 import { pickPropOut } from '../../helpers/Board/utils';
 import useStyles from './useStyles';
+import CreateCardDialog from '../CreateCardDialog/CreateCardDialog';
 
 interface ColumnProps {
   children: { id: number; title: string; cards: { id: number; title: string; description: string }[] };
@@ -69,6 +70,7 @@ function Column({
                   ) : (
                     <div className={classes.cardSkeleton} />
                   )}
+                  <CreateCardDialog />
                 </DroppableColumn>
               </div>
             )}
