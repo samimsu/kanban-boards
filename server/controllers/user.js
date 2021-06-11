@@ -30,7 +30,7 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
 
   try {
     console.log(user)
-    const attempt = await User.updateOne({ email: user.email }, user ).exec();
+    const attempt = await User.findByIdAndUpdate(user.id, user ).exec();
     console.log(attempt)
     res.status(200).json({ user });
   } catch (err) {

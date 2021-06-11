@@ -74,7 +74,8 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
         user: {
           id: user._id,
           username: user.username,
-          email: user.email
+          email: user.email,
+          profilePicture: user.profilePicture,
         }
       }
     });
@@ -100,7 +101,8 @@ exports.loadUser = asyncHandler(async (req, res, next) => {
       user: {
         id: user._id,
         username: user.username,
-        email: user.email
+        email: user.email,
+        profilePicture: user.profilePicture,
       }
     }
   });
