@@ -7,17 +7,14 @@ const useStyles = makeStyles((theme) => ({
   },
   label: {
     fontSize: 19,
-    color: 'rgb(0,0,0,0.4)',
-    paddingLeft: '5px',
+    fontWeight: 'bold',
+    color: 'rgb(0,0,0,1)',
   },
   inputs: {
     marginTop: '.8rem',
     height: '2rem',
     padding: '5px',
-  },
-  forgot: {
-    paddingRight: 10,
-    color: '#3a8dff',
+    textAlign: 'center',
   },
   submit: {
     margin: theme.spacing(3, 2, 2),

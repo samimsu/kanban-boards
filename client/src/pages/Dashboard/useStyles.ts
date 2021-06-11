@@ -16,6 +16,16 @@ const useStyles = makeStyles((theme) => ({
       width: '300px',
     },
   },
+  addColumnButton: {
+    color: 'white',
+    height: 300,
+    width: 50,
+    borderRadius: 1,
+    backgroundColor: 'lightGrey',
+  },
+  board: {
+    width: '100%',
+  },
 }));
 
 export default useStyles;

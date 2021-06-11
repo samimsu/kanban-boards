@@ -1,4 +1,6 @@
 const User = require("../models/User");
+const Column = require("../models/Column");
+const Board = require("../models/Board");
 const asyncHandler = require("express-async-handler");
 const generateToken = require("../utils/generateToken");
 
@@ -6,7 +8,7 @@ const generateToken = require("../utils/generateToken");
 // @desc Register user
 // @access Public
 exports.registerUser = asyncHandler(async (req, res, next) => {
-  const { username, email, password } = req.body;
+  const { email, password } = req.body;
 
   const emailExists = await User.findOne({ email });
 
@@ -15,17 +17,25 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
     throw new Error("A user with that email already exists");
   }
 
-  const usernameExists = await User.findOne({ username });
+  // A new board already comes with the "in progress" and "completed" columns and is created for the user when they sign up
+  const inProgressColumn = await Column.create({
+    title: "In Progress",
+    cards: [],
+  });
 
-  if (usernameExists) {
-    res.status(400);
-    throw new Error("A user with that username already exists");
-  }
+  const completedColumn = await Column.create({
+    title: "Completed",
+    cards: [],
+  });
+
+  const board = await Board.create({
+    columns: [inProgressColumn, completedColumn],
+  });
 
   const user = await User.create({
-    username,
     email,
-    password
+    password,
+    board,
   });
 
   if (user) {
@@ -34,17 +44,17 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      maxAge: secondsInWeek * 1000
+      maxAge: secondsInWeek * 1000,
     });
 
     res.status(201).json({
       success: {
         user: {
           id: user._id,
-          username: user.username,
-          email: user.email
-        }
-      }
+          email: user.email,
+          board: user.board,
+        },
+      },
     });
   } else {
     res.status(400);
@@ -66,15 +76,19 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      maxAge: secondsInWeek * 1000
+      maxAge: secondsInWeek * 1000,
     });
+
+    const fullBoardById = await Board.findById(user.board)
+      .populate({ path: "columns", populate: { path: "cards" } })
+      .exec();
 
     res.status(200).json({
       success: {
         user: {
           id: user._id,
-          username: user.username,
           email: user.email,
+          board: fullBoardById,
           profilePicture: user.profilePicture,
         }
       }
@@ -100,11 +114,10 @@ exports.loadUser = asyncHandler(async (req, res, next) => {
     success: {
       user: {
         id: user._id,
-        username: user.username,
         email: user.email,
         profilePicture: user.profilePicture,
-      }
-    }
+      },
+    },
   });
 });
 
