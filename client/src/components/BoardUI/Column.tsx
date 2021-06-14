@@ -61,6 +61,7 @@ function Column({
                           index={index}
                           renderCard={(dragging: boolean) => renderCard(children, card, dragging)}
                           disableCardDrag={disableCardDrag}
+                          column={children.title}
                         >
                           {card}
                         </Card>
