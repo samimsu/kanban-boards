@@ -13,7 +13,10 @@ const userSchema = new mongoose.Schema({
   },
   register_date: {
     type: Date,
-    default: Date.now,
+    default: Date.now
+  },
+  profilePicture: {
+    type: String
   },
   // A user has one board
   board: {

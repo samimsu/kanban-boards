@@ -89,8 +89,9 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
           id: user._id,
           email: user.email,
           board: fullBoardById,
-        },
-      },
+          profilePicture: user.profilePicture,
+        }
+      }
     });
   } else {
     res.status(401);
@@ -114,6 +115,7 @@ exports.loadUser = asyncHandler(async (req, res, next) => {
       user: {
         id: user._id,
         email: user.email,
+        profilePicture: user.profilePicture,
       },
     },
   });

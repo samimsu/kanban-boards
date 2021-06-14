@@ -4,6 +4,7 @@ import { AuthApiData, AuthApiDataSuccess } from '../interface/AuthApiData';
 import { User } from '../interface/User';
 import loginWithCookies from '../helpers/APICalls/loginWithCookies';
 import logoutAPI from '../helpers/APICalls/logout';
+import updateUserAPI from '../helpers/APICalls/updateUser';
 
 interface IAuthContext {
   loggedInUser: User | null | undefined;
@@ -33,10 +34,11 @@ export const AuthProvider: FunctionComponent = ({ children }): JSX.Element => {
   );
 
   const updateUser = useCallback(
-    (data: User) => {
-      setLoggedInUser(data);
-      // TODO: send updated user data to backend from here
-      history.push('/dashboard');
+    async (data: User) => {
+      await updateUserAPI(data).then((res) => {
+        if (res.user) setLoggedInUser(res.user);
+        history.push('/dashboard');
+      });
     },
     [history],
   );

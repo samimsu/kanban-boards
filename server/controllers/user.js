@@ -21,3 +21,21 @@ exports.searchUsers = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({ users: users });
 });
+
+// @route PUT /users/update
+// @desc Update a user
+// @access Private
+exports.updateUser = asyncHandler(async (req, res, next) => {
+  const { user } = req.body;
+
+  try {
+    console.log(user)
+    const attempt = await User.findByIdAndUpdate(user.id, user ).exec();
+    console.log(attempt)
+    res.status(200).json({ user });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(err);
+  }
+
+})
