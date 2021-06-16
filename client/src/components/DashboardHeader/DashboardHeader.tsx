@@ -10,12 +10,14 @@ import MenuItem from '@material-ui/core/MenuItem';
 import logo from '../../Images/logo.png';
 import useStyles from './useStyles';
 import CreateBoardDialog from '../CreateBoardDialog/CreateBoardDialog';
+import { useAuth } from '../../context/useAuthContext';
 
 const DashboardHeader = (): JSX.Element => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [createBoardOpen, setCreateBoardOpen] = React.useState(false);
   const open = Boolean(anchorEl);
+  const { logout } = useAuth();
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -30,6 +32,11 @@ const DashboardHeader = (): JSX.Element => {
 
   const handleCloseCreateBoard = () => {
     setCreateBoardOpen(false);
+  };
+
+  const handleLogout = () => {
+    handleClose();
+    logout();
   };
 
   return (
@@ -65,8 +72,8 @@ const DashboardHeader = (): JSX.Element => {
           S
         </Avatar>
         <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-          <MenuItem onClick={handleClose}>Logout</MenuItem>
           <MenuItem onClick={handleClose}>Go to profile</MenuItem>
+          <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>
       </Box>
     </Box>
