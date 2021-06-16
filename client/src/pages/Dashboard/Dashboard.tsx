@@ -60,7 +60,7 @@ export default function Dashboard(): JSX.Element {
         </Grid>
 
         <Grid item>
-          <BoardUI />
+          <BoardUI board={loggedInUser.board} />
         </Grid>
 
         <Grid item>
