@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const asyncHandler = require("express-async-handler");
+const filterUser = require("../utils/filterUser");
 
 // @route POST /users
 // @desc Search for users
@@ -29,10 +30,8 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
   const { user } = req.body;
 
   try {
-    console.log(user)
-    const attempt = await User.findByIdAndUpdate(user.id, user ).exec();
-    console.log(attempt)
-    res.status(200).json({ user });
+    const user = await User.findByIdAndUpdate(user.id, user ).exec();
+    res.status(200).json({ user: filterUser(user) });
   } catch (err) {
     console.error(err);
     res.status(500).send(err);

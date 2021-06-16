@@ -1,6 +1,10 @@
+import Board from './Board';
+
 export interface User {
   email: string;
   profilePicture: string;
+  boards?: Board[];
+  boards_id?: string[];
 }
 
 export interface SearchUsersApiData {
