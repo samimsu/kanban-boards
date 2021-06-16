@@ -1,7 +1,12 @@
-import Column from './Column';
+import { Column } from './Column';
 
-export default interface Board {
+export interface Board {
+  _id: string;
   title: string;
-  columns?: Column[];
-  columns_id?: string[];
+  columns: Column[];
+}
+
+export interface UpdateBoardApiData {
+  success?: Board;
+  error?: { message: string };
 }

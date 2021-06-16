@@ -1,7 +1,7 @@
-import Card from './Card';
+import { Card } from './Card';
 
-export default interface Column {
+export interface Column {
+  _id: string;
   title: string;
-  cards?: Card[];
-  cards_id?: string[];
+  cards: Card[];
 }

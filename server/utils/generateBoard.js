@@ -14,6 +14,7 @@ const generateBoard = async () => {
   });
 
   const board = await Board.create({
+    title: "New Board",
     columns: [inProgressColumn, completedColumn],
   });
   

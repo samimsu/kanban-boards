@@ -6,7 +6,7 @@ interface CardAttachment {
   type: string;
 }
 
-export default interface Card {
+export interface Card {
   name: string;
   description: string;
   tags?: CardTag[];

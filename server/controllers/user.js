@@ -27,11 +27,10 @@ exports.searchUsers = asyncHandler(async (req, res, next) => {
 // @desc Update a user
 // @access Private
 exports.updateUser = asyncHandler(async (req, res, next) => {
-  const { user } = req.body;
-
   try {
-    const user = await User.findByIdAndUpdate(user.id, user ).exec();
-    res.status(200).json({ user: filterUser(user) });
+    const newUser = req.body.user;
+    const user = await User.findByIdAndUpdate(newUser.id, newUser ).exec();
+    res.status(200).json({ success: filterUser(user) });
   } catch (err) {
     console.error(err);
     res.status(500).send(err);
