@@ -1,7 +1,9 @@
 export interface User {
   email: string;
   profilePicture: string;
-  board: {},
+  board: {
+    columns: { id: number; title: string; cards: { id: number; title: string; description: string }[] }[];
+  };
 }
 
 export interface SearchUsersApiData {

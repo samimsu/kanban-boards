@@ -45,6 +45,10 @@ function BoardContainer({
 
   const DroppableBoard = withDroppable(Columns);
 
+  const cardsTotal = board.columns.map((column) => column.cards.length).reduce((sum, num) => sum + num);
+  const [cardsCount, setCardsCount] = useState(cardsTotal);
+  console.log('board', board);
+
   function handleOnDragEnd(event: { type: unknown }): void {
     const coordinates = getCoordinates(event, board);
     if (!coordinates.source) return;
@@ -78,6 +82,8 @@ function BoardContainer({
                 }
                 disableColumnDrag={disableColumnDrag}
                 disableCardDrag={disableCardDrag}
+                cardsTotal={cardsCount}
+                setCardsCount={setCardsCount}
               >
                 {column}
               </Column>

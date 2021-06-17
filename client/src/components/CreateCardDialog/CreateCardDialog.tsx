@@ -11,16 +11,22 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 
-const CreateCardDialog = (): JSX.Element => {
+interface Props {
+  // eslint-disable-next-line
+  handleClick: (event: any) => void;
+  handleClickOpen: () => void;
+  handleClose: () => void;
+  open: boolean;
+}
+
+const CreateCardDialog = ({ handleClick, handleClickOpen, handleClose, open }: Props): JSX.Element => {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const [title, setTitle] = React.useState('');
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
+  // eslint-disable-next-line
+  const handleSubmit = (event: any) => {
+    event.preventDefault();
+    handleClick(title);
   };
 
   return (
@@ -29,30 +35,34 @@ const CreateCardDialog = (): JSX.Element => {
         Add a card
       </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-        <Box className={classes.dialog}>
-          <IconButton className={classes.closeButton} aria-label="close" onClick={handleClose}>
-            <CloseIcon />
-          </IconButton>
-          <DialogTitle id="form-dialog-title">
-            <Typography className={classes.title}>Create a new card</Typography>
-          </DialogTitle>
-          <DialogContent className={classes.content}>
-            <TextField
-              className={classes.textField}
-              inputProps={{ min: 0, style: { textAlign: 'center' } }}
-              id="outlined-basic"
-              placeholder="Add Title"
-              variant="outlined"
-            >
-              <Typography className={classes.text}></Typography>
-            </TextField>
-          </DialogContent>
-          <DialogActions className={classes.actions}>
-            <Button className={classes.createButton} onClick={handleClose} color="primary" variant="contained">
-              Create
-            </Button>
-          </DialogActions>
-        </Box>
+        <form onSubmit={handleSubmit}>
+          <Box className={classes.dialog}>
+            <IconButton className={classes.closeButton} aria-label="close" onClick={handleClose} type="button">
+              <CloseIcon />
+            </IconButton>
+            <DialogTitle id="form-dialog-title">
+              <Typography className={classes.title}>Create a new card</Typography>
+            </DialogTitle>
+            <DialogContent className={classes.content}>
+              <TextField
+                className={classes.textField}
+                inputProps={{ min: 0, style: { textAlign: 'center' } }}
+                id="outlined-basic"
+                placeholder="Add Title"
+                variant="outlined"
+                // eslint-disable-next-line
+                onInput={(e: any) => setTitle(e.target.value)}
+              >
+                <Typography className={classes.text}></Typography>
+              </TextField>
+            </DialogContent>
+            <DialogActions className={classes.actions}>
+              <Button type="submit" className={classes.createButton} color="primary" variant="contained">
+                Create
+              </Button>
+            </DialogActions>
+          </Box>
+        </form>
       </Dialog>
     </div>
   );

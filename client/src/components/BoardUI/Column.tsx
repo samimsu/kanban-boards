@@ -1,4 +1,4 @@
-import React, { CSSProperties } from 'react';
+import React, { useState, CSSProperties } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import NaturalDragAnimation from 'natural-drag-animation-rbdnd';
 import Card from './Card';
@@ -14,6 +14,8 @@ interface ColumnProps {
   renderColumnHeader: CallableFunction;
   disableColumnDrag: boolean;
   disableCardDrag: boolean;
+  cardsTotal: number;
+  setCardsCount: (count: number) => void;
 }
 
 function Column({
@@ -23,7 +25,18 @@ function Column({
   renderColumnHeader,
   disableColumnDrag,
   disableCardDrag,
+  cardsTotal,
+  setCardsCount,
 }: ColumnProps): JSX.Element {
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpenCardDialog = () => {
+    setOpen(true);
+  };
+
+  const handleCloseCardDialog = () => {
+    setOpen(false);
+  };
   const classes = useStyles();
 
   const ColumnEmptyPlaceholder = React.forwardRef<HTMLDivElement, unknown>((props, ref) => (
@@ -34,9 +47,24 @@ function Column({
 
   const DroppableColumn = withDroppable(ColumnEmptyPlaceholder);
 
+  console.log('children.cards', children.cards);
+
+  // eslint-disable-next-line
+  const handleCardDialogClick = (title: any) => {
+    const cardId = cardsTotal + 1;
+    setCardsCount(cardId);
+    console.log('cardsTotal', cardsTotal);
+    children.cards.push({ id: cardId, title: title, description: 'test' });
+    console.log('children.cards', children.cards);
+    setOpen(false);
+  };
+
   return (
     <Draggable draggableId={`column-draggable-${children.id}`} index={columnIndex} isDragDisabled={disableColumnDrag}>
       {(columnProvided, snapshot) => {
+        {
+          console.log('draggable column index', columnIndex);
+        }
         const draggablePropsWithoutStyle = pickPropOut(columnProvided.draggableProps, 'style');
 
         return (
@@ -70,7 +98,12 @@ function Column({
                   ) : (
                     <div className={classes.cardSkeleton} />
                   )}
-                  <CreateCardDialog />
+                  <CreateCardDialog
+                    open={open}
+                    handleClick={handleCardDialogClick}
+                    handleClickOpen={handleClickOpenCardDialog}
+                    handleClose={handleCloseCardDialog}
+                  />
                 </DroppableColumn>
               </div>
             )}

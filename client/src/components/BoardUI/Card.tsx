@@ -15,6 +15,9 @@ function Card({ children, index, renderCard, disableCardDrag }: CardProps): JSX.
   return (
     <Draggable draggableId={String(children.id)} index={index} isDragDisabled={disableCardDrag}>
       {(provided, snapshot) => {
+        {
+          console.log('draggable card index', index);
+        }
         return (
           <NaturalDragAnimation style={provided.draggableProps.style} snapshot={snapshot}>
             {(style: CSSProperties): JSX.Element => (
