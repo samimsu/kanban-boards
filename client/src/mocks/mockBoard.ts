@@ -1,60 +1,62 @@
 const mockData = {
+  title: 'Mock Board',
+  _id: 'board1',
   columns: [
     {
-      id: 1,
+      _id: '1',
       title: 'Philosophy',
       cards: [
         {
-          id: 1,
-          title: 'Essay on the environment',
+          _id: '1',
+          name: 'Essay on the environment',
           description: 'Card content',
         },
       ],
     },
     {
-      id: 2,
+      _id: '2',
       title: 'Math',
       cards: [
         {
-          id: 9,
-          title: 'Midterm exam',
+          _id: '9',
+          name: 'Midterm exam',
           description: 'March 10',
         },
         {
-          id: 10,
-          title: 'Practice exam',
+          _id: '10',
+          name: 'Practice exam',
           description: 'Card content',
         },
       ],
     },
     {
-      id: 3,
+      _id: '3',
       title: 'In Progress',
       cards: [
         {
-          id: 11,
-          title: 'Homework',
+          _id: '11',
+          name: 'Homework',
           description: 'Card content',
         },
       ],
     },
     {
-      id: 4,
+      _id: '4',
       title: 'Completed',
       cards: [
         {
-          id: 12,
-          title: 'Workshop',
+          _id: '12',
+          name: 'Workshop',
           description: 'Card content',
         },
         {
-          id: 13,
-          title: 'Practice exam',
+          _id: '13',
+          name: 'Practice exam',
           description: 'Card content',
         },
         {
-          id: 2,
-          title: 'Research',
+          _id: '2',
+          name: 'Research',
           description: 'Card content',
         },
       ],
