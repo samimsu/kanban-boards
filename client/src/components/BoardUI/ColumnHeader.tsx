@@ -6,7 +6,7 @@ interface ColumnTitleProps {
 }
 
 interface ColumnHeaderProps {
-  children: { id: number; title: string; cards: { id: number; title: string; description: string }[] };
+  children: { _id: number; title: string; cards: { _id: number; title: string; description: string }[] };
 }
 
 function ColumnTitle({ children: title }: ColumnTitleProps): JSX.Element {

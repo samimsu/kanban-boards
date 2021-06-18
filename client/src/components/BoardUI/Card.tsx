@@ -13,7 +13,7 @@ interface CardProps {
 function Card({ children, index, renderCard, disableCardDrag }: CardProps): JSX.Element {
   const classes = useStyles();
   return (
-    <Draggable draggableId={String(children.id)} index={index} isDragDisabled={disableCardDrag}>
+    <Draggable draggableId={String(children._id)} index={index} isDragDisabled={disableCardDrag}>
       {(provided, snapshot) => {
         return (
           <NaturalDragAnimation style={provided.draggableProps.style} snapshot={snapshot}>
@@ -22,7 +22,7 @@ function Card({ children, index, renderCard, disableCardDrag }: CardProps): JSX.
                 ref={provided.innerRef}
                 {...provided.draggableProps}
                 {...provided.dragHandleProps}
-                data-testid={`card-${children.id}`}
+                data-testid={`card-${children._id}`}
                 style={style}
               >
                 <div className={classes.cardWrapper}>{renderCard(snapshot.isDragging)}</div>

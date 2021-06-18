@@ -17,7 +17,7 @@ import useStyles from './useStyles';
 import React from 'react';
 
 interface BoardContainerProps {
-  children: { columns: { id: number; title: string; cards: { id: number; title: string; description: string }[] }[] };
+  children: { columns: { _id: number; title: string; cards: { _id: number; title: string; description: string }[] }[] };
   renderCard: CallableFunction;
   disableColumnDrag: boolean;
   disableCardDrag: boolean;
@@ -62,17 +62,17 @@ function BoardContainer({
         <DroppableBoard droppableId="board-droppable" direction="horizontal" type="BOARD">
           {board.columns.map(
             (
-              column: { id: number; title: string; cards: { id: number; title: string; description: string }[] },
+              column: { _id: number; title: string; cards: { _id: number; title: string; description: string }[] },
               index,
             ): JSX.Element => (
               <Column
-                key={column.id}
+                key={column._id}
                 index={index}
                 renderCard={renderCard}
                 renderColumnHeader={(column: {
-                  id: number;
+                  _id: number;
                   title: string;
-                  cards: { id: number; title: string; description: string }[];
+                  cards: { _id: number; title: string; description: string }[];
                 }) =>
                   renderColumnHeader ? renderColumnHeader(column) : <DefaultColumnHeader>{column}</DefaultColumnHeader>
                 }
@@ -91,7 +91,7 @@ function BoardContainer({
 
 interface UncontrolledBoardProps {
   initialBoard: {
-    columns: { id: number; title: string; cards: { id: number; title: string; description: string }[] }[];
+    columns: { _id: number; title: string; cards: { _id: number; title: string; description: string }[] }[];
   };
   onCardDragEnd: CallableFunction;
   onColumnDragEnd: CallableFunction;
@@ -150,7 +150,7 @@ function UncontrolledBoard({
 function Board(
   props: JSX.IntrinsicAttributes & {
     initialBoard: {
-      columns: { id: number; title: string; cards: { id: number; title: string; description: string }[] }[];
+      columns: { _id: number; title: string; cards: { _id: number; title: string; description: string }[] }[];
     };
     onCardDragEnd: CallableFunction;
     onColumnDragEnd: CallableFunction;
