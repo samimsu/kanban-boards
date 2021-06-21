@@ -1,16 +1,17 @@
 import { Draggable } from 'react-beautiful-dnd';
 import NaturalDragAnimation from 'natural-drag-animation-rbdnd';
 import useStyles from './useStyles';
-import { CSSProperties, ReactNode } from 'react';
+import { CSSProperties } from 'react';
+import { Card } from '../../interface/Card';
 
 interface CardProps {
-  children: Record<string, ReactNode>;
+  children: Card;
   index: number;
   renderCard: CallableFunction;
   disableCardDrag: boolean;
 }
 
-function Card({ children, index, renderCard, disableCardDrag }: CardProps): JSX.Element {
+function CardUI({ children, index, renderCard, disableCardDrag }: CardProps): JSX.Element {
   const classes = useStyles();
   return (
     <Draggable draggableId={String(children._id)} index={index} isDragDisabled={disableCardDrag}>
@@ -35,4 +36,4 @@ function Card({ children, index, renderCard, disableCardDrag }: CardProps): JSX.
   );
 }
 
-export default Card;
+export default CardUI;

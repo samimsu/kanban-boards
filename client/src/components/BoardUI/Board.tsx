@@ -1,6 +1,5 @@
-import { useState } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
-import Column from './Column';
+import ColumnUI from './Column';
 import withDroppable from './withDroppable';
 import DefaultColumnHeader from './ColumnHeader';
 import DefaultCard from './DefaultCard';
@@ -13,11 +12,14 @@ import {
   isMovingACardToAnotherPosition,
 } from '../../helpers/Board/services';
 import { moveCard, moveColumn } from '../../helpers/Board/helpers';
+import { Column } from '../../interface/Column';
+import { Board } from '../../interface/Board';
+import { useBoard } from '../../context/useBoardContext';
 import useStyles from './useStyles';
 import React from 'react';
 
 interface BoardContainerProps {
-  children: { columns: { _id: number; title: string; cards: { _id: number; title: string; description: string }[] }[] };
+  children: Board;
   renderCard: CallableFunction;
   disableColumnDrag: boolean;
   disableCardDrag: boolean;
@@ -61,11 +63,8 @@ function BoardContainer({
       <div className={classes.board}>
         <DroppableBoard droppableId="board-droppable" direction="horizontal" type="BOARD">
           {board.columns.map(
-            (
-              column: { _id: number; title: string; cards: { _id: number; title: string; description: string }[] },
-              index,
-            ): JSX.Element => (
-              <Column
+            (column: Column, index): JSX.Element => (
+              <ColumnUI
                 key={column._id}
                 index={index}
                 renderCard={renderCard}
@@ -80,7 +79,7 @@ function BoardContainer({
                 disableCardDrag={disableCardDrag}
               >
                 {column}
-              </Column>
+              </ColumnUI>
             ),
           )}
         </DroppableBoard>
@@ -90,9 +89,7 @@ function BoardContainer({
 }
 
 interface UncontrolledBoardProps {
-  initialBoard: {
-    columns: { _id: number; title: string; cards: { _id: number; title: string; description: string }[] }[];
-  };
+  initialBoard: Board;
   onCardDragEnd: CallableFunction;
   onColumnDragEnd: CallableFunction;
   renderColumnHeader: CallableFunction;
@@ -110,7 +107,7 @@ function UncontrolledBoard({
   disableCardDrag,
   disableColumnDrag,
 }: UncontrolledBoardProps): JSX.Element {
-  const [board, setBoard] = useState(initialBoard);
+  const { currentBoard, setBoard } = useBoard();
   const handleOnCardDragEnd = partialRight(handleOnDragEnd, { moveCallback: moveCard, notifyCallback: onCardDragEnd });
   const handleOnColumnDragEnd = partialRight(handleOnDragEnd, {
     moveCallback: moveColumn,
@@ -121,7 +118,7 @@ function UncontrolledBoard({
     { source, destination, subject }: { source: unknown; destination: unknown; subject: unknown },
     { moveCallback, notifyCallback }: { moveCallback: CallableFunction; notifyCallback: CallableFunction },
   ): void {
-    const reorderedBoard = moveCallback(board, source, destination);
+    const reorderedBoard = moveCallback(currentBoard, source, destination);
     when(notifyCallback)((callback: (arg0: unknown, arg1: unknown, arg2: unknown, arg3: unknown) => unknown) =>
       callback(reorderedBoard, subject, source, destination),
     );
@@ -142,16 +139,14 @@ function UncontrolledBoard({
       disableColumnDrag={disableColumnDrag}
       disableCardDrag={disableCardDrag}
     >
-      {board}
+      {currentBoard}
     </BoardContainer>
   );
 }
 
-function Board(
+function BoardUI(
   props: JSX.IntrinsicAttributes & {
-    initialBoard: {
-      columns: { _id: number; title: string; cards: { _id: number; title: string; description: string }[] }[];
-    };
+    initialBoard: Board;
     onCardDragEnd: CallableFunction;
     onColumnDragEnd: CallableFunction;
     renderColumnHeader: CallableFunction;
@@ -163,4 +158,4 @@ function Board(
   return <UncontrolledBoard {...props} />;
 }
 
-export default Board;
+export default BoardUI;

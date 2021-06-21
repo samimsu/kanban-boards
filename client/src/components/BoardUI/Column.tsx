@@ -1,14 +1,15 @@
 import React, { CSSProperties } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import NaturalDragAnimation from 'natural-drag-animation-rbdnd';
-import Card from './Card';
+import CardUI from './Card';
 import withDroppable from './withDroppable';
 import { pickPropOut } from '../../helpers/Board/utils';
 import useStyles from './useStyles';
 import CreateCardDialog from '../CreateCardDialog/CreateCardDialog';
+import { Column } from '../../interface/Column';
 
 interface ColumnProps {
-  children: { _id: number; title: string; cards: { _id: number; title: string; description: string }[] };
+  children: Column;
   index: number;
   renderCard: CallableFunction;
   renderColumnHeader: CallableFunction;
@@ -16,7 +17,7 @@ interface ColumnProps {
   disableCardDrag: boolean;
 }
 
-function Column({
+function ColumnUI({
   children,
   index: columnIndex,
   renderCard,
@@ -57,14 +58,14 @@ function Column({
                   {children.cards.length ? (
                     children.cards.map(
                       (card, index): JSX.Element => (
-                        <Card
+                        <CardUI
                           key={card._id}
                           index={index}
                           renderCard={(dragging: boolean) => renderCard(children, card, dragging)}
                           disableCardDrag={disableCardDrag}
                         >
                           {card}
-                        </Card>
+                        </CardUI>
                       ),
                     )
                   ) : (
@@ -81,4 +82,4 @@ function Column({
   );
 }
 
-export default Column;
+export default ColumnUI;
