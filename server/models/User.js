@@ -18,12 +18,8 @@ const userSchema = new mongoose.Schema({
   profilePicture: {
     type: String
   },
-  // A user has one board
-  board: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: "board",
-  },
+  // A user has many boards
+  boards: [{ type: mongoose.Schema.Types.ObjectId, ref: "board"}],
 });
 
 userSchema.methods.matchPassword = async function (enteredPassword) {

@@ -47,7 +47,7 @@ export default function Dashboard(): JSX.Element {
       <CssBaseline />
 
       <Grid item xs={12}>
-        <DashboardHeader />
+        <DashboardHeader loggedInUser={loggedInUser} />
         <DashboardAppBar />
       </Grid>
 

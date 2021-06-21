@@ -39,7 +39,7 @@ export const AuthProvider: FunctionComponent = ({ children }): JSX.Element => {
   const updateUser = useCallback(
     async (data: User) => {
       await updateUserAPI(data).then((res) => {
-        if (res.user) setLoggedInUser(res.user);
+        if (res.success) setLoggedInUser(res.success);
         history.push('/dashboard');
       });
     },
