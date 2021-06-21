@@ -1,4 +1,4 @@
-import { UpdateBoardApiData } from '../../interface/Board';
+import { UpdateBoardApiData, BoardTitleApiData } from '../../interface/Board';
 import { User } from '../../interface/User';
 import { FetchOptions } from '../../interface/FetchOptions';
 
@@ -26,4 +26,16 @@ const newBoard = async (user: User): Promise<UpdateBoardApiData> => {
     }));
 };
 
-export { getBoard, newBoard };
+const getBoardTitles = async (user: User): Promise<BoardTitleApiData> => {
+  const fetchOptions: FetchOptions = {
+    method: 'GET',
+    credentials: 'include',
+  };
+  return await fetch(`/board/title?id=${user.id}`, fetchOptions)
+    .then((res) => res.json())
+    .catch(() => ({
+      error: { message: 'Unable to connect to server. Please try again' },
+    }));
+};
+
+export { getBoard, newBoard, getBoardTitles };

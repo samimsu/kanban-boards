@@ -28,3 +28,17 @@ exports.updateBoard = asyncHandler(async (req, res, next) => {
     res.status(500).send(err);
   }
 });
+
+// @route GET /board/title
+// @desc Get board titles of specified user
+// @access Private
+exports.boardTitle = asyncHandler(async (req, res, next) => {
+  try {
+    const user = await User.findById(req.query.id).populate({path: "boards"}).exec();
+    const titles = user.boards.map(b => b.title || 'Untitled');
+    res.status(200).json({success: titles});
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(err);
+  }
+});

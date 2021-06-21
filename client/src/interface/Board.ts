@@ -10,3 +10,8 @@ export interface UpdateBoardApiData {
   success?: Board;
   error?: { message: string };
 }
+
+export interface BoardTitleApiData {
+  success?: { titles: string[] };
+  error?: { message: string };
+}
