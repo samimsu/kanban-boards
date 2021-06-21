@@ -4,7 +4,7 @@ import { Board } from '../interface/Board';
 import mockBoard from './mockBoard';
 
 const MockUseBoardProvider: FunctionComponent = ({ children }) => {
-  const [board, setBoard] = useState(mockBoard);
+  const [board, setBoard] = useState<Board>(mockBoard);
 
   return (
     <BoardContext.Provider
