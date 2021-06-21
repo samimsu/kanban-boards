@@ -7,6 +7,7 @@ interface CardAttachment {
 }
 
 export interface Card {
+  _id: string;
   name: string;
   description: string;
   tags?: CardTag[];
