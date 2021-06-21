@@ -11,9 +11,10 @@ const MockUseBoardProvider: FunctionComponent = ({ children }) => {
       value={{
         currentBoard: board,
         setBoard: setBoard,
-        publishBoard: () => {
-          console.log('publish');
-        },
+        publishBoard: () => null,
+        fetchBoard: () => null,
+        boardTitles: ['Board 1', 'Board 2nd', 'Board Three'],
+        fetchBoardTitles: () => null,
       }}
     >
       {children}
