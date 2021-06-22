@@ -59,8 +59,8 @@ export default function Dashboard(): JSX.Element {
           <CreateColumnDialog createColumnOpen={createColumnOpen} handleCloseCreateColumn={handleCloseCreateColumn} />
         </Grid>
 
-        <Grid item>
-          <BoardUI board={loggedInUser.board} />
+        <Grid item xs={12}>
+          <BoardUI />
         </Grid>
 
         <Grid item>

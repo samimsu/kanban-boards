@@ -54,7 +54,7 @@ function Column({
     const cardId = cardsTotal + 1;
     setCardsCount(cardId);
     console.log('cardsTotal', cardsTotal);
-    children.cards.push({ id: cardId, title: title, description: 'test' });
+    children.cards.push({ id: cardId, title: title, description: '' });
     console.log('children.cards', children.cards);
     setOpen(false);
   };
