@@ -8,6 +8,7 @@ import BoardUI from './components/BoardUI/BoardUI';
 import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
+import BoardProvider from './mocks/mockUseBoardContext';
 
 import './App.css';
 
@@ -16,21 +17,23 @@ function App(): JSX.Element {
     <MuiThemeProvider theme={theme}>
       <BrowserRouter>
         <SnackBarProvider>
-          <AuthProvider>
-            <SocketProvider>
-              <Switch>
-                <Route exact path="/login" component={Login} />
-                <Route exact path="/signup" component={Signup} />
-                <Route exact path="/dashboard">
-                  <Dashboard />
-                </Route>
-                <Route exact path="/board-ui" component={BoardUI} />
-                <Route path="*">
-                  <Redirect to="/login" />
-                </Route>
-              </Switch>
-            </SocketProvider>
-          </AuthProvider>
+          <BoardProvider>
+            <AuthProvider>
+              <SocketProvider>
+                <Switch>
+                  <Route exact path="/login" component={Login} />
+                  <Route exact path="/signup" component={Signup} />
+                  <Route exact path="/dashboard">
+                    <Dashboard />
+                  </Route>
+                  <Route exact path="/board-ui" component={BoardUI} />
+                  <Route path="*">
+                    <Redirect to="/login" />
+                  </Route>
+                </Switch>
+              </SocketProvider>
+            </AuthProvider>
+          </BoardProvider>
         </SnackBarProvider>
       </BrowserRouter>
     </MuiThemeProvider>
