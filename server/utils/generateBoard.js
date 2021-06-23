@@ -18,7 +18,7 @@ const generateBoard = async (boardtitle) => {
     columns: [inProgressColumn, completedColumn],
   });
   
-  return board._id
+  return board
 }
 
 module.exports = generateBoard;
