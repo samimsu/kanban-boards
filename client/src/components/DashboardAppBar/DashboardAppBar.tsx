@@ -9,24 +9,20 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Drawer from '@material-ui/core/Drawer';
 import useStyles from './useStyles';
+import { useBoard } from '../../context/useBoardContext';
+import { Link } from 'react-router-dom';
 
 const DashboardAppBar = (): JSX.Element => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const { currentBoard, boardTitles, fetchBoard } = useBoard();
+  const { currentBoard, boardTitles } = useBoard();
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleCloseMenu = () => {
     setAnchorEl(null);
-  };
-  const handleMenuItem = (index: number) => {
-    if (loggedInUser.boards && loggedInUser.boards.length > index) {
-      fetchBoard(loggedInUser.boards[index]);
-      handleCloseMenu();
-    }
   };
 
   return (
@@ -39,9 +35,9 @@ const DashboardAppBar = (): JSX.Element => {
         </IconButton>
         <Drawer anchor="right" open={open} onClose={handleCloseMenu}>
           <List>
-            {boardTitles.map((text, index) => (
-              <ListItem button key={text} onClick={() => handleMenuItem(index)}>
-                <ListItemText primary={text} />
+            {boardTitles.map(({ id, title }) => (
+              <ListItem button key={id} component={Link} to={`?board=${id}`} onClick={handleCloseMenu}>
+                <ListItemText primary={title} />
               </ListItem>
             ))}
           </List>
