@@ -43,8 +43,6 @@ export default function Dashboard(): JSX.Element {
         history.push({
           search: `?board=${loggedInUser.boards[0]}`,
         });
-      } else {
-        //The user always has at least one board so this shouldn't happen
       }
     } catch (e) {
       updateSnackBarMessage(e.message);
