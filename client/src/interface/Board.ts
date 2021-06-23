@@ -12,6 +12,6 @@ export interface UpdateBoardApiData {
 }
 
 export interface BoardTitleApiData {
-  success?: { titles: string[] };
+  success?: string[];
   error?: { message: string };
 }

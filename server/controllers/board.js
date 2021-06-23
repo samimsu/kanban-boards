@@ -1,6 +1,7 @@
 const Board = require("../models/Board");
 const fullBoard = require("../utils/fullBoard");
 const asyncHandler = require("express-async-handler");
+const generateBoard = require("../utils/generateBoard");
 
 // @route GET /board
 // @desc Get complete board object (includes card and column objects ordered)
@@ -23,6 +24,23 @@ exports.updateBoard = asyncHandler(async (req, res, next) => {
     const newBoard = req.body.board;
     const board = await fullBoard(Board.findByIdAndUpdate(newBoard._id, newBoard));
     res.status(200).json({ success: board });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(err);
+  }
+});
+
+// @route PUT /board/create
+// @desc Creates new board with given title to given user
+// @access Private
+exports.createBoard = asyncHandler(async (req, res, next) => {
+  try {
+    const { id, title } = req.body;
+    const userModel = await User.findById(id).exec();
+    const board = await generateBoard(title);
+    userModel.boards.push(board);
+    await User.findByIdAndUpdate(id, userModel);
+    res.status(200).json({ success: await fullBoard(Board.findById(board)) });
   } catch (err) {
     console.error(err);
     res.status(500).send(err);

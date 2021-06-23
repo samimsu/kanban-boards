@@ -19,12 +19,12 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
     throw new Error("A user with that email already exists");
   }
 
-  const boards = generateBoard();
+  const board = await generateBoard('My School Board');
 
   let user = await User.create({
     email,
     password,
-    boards,
+    boards: [ board ],
   });
 
   if (user) {
@@ -63,7 +63,7 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
     });
 
     if (user.boards.length === 0) {
-        user.boards = await generateBoard();
+        user.boards = [ await generateBoard('My School Board') ];
         await User.findByIdAndUpdate(user._id, user ).exec();
     }
 
