@@ -5,6 +5,7 @@ import { User } from '../interface/User';
 import loginWithCookies from '../helpers/APICalls/loginWithCookies';
 import logoutAPI from '../helpers/APICalls/logout';
 import updateUserAPI from '../helpers/APICalls/updateUser';
+import { useBoard } from './useBoardContext';
 
 interface IAuthContext {
   loggedInUser: User | null | undefined;
@@ -23,11 +24,13 @@ export const AuthContext = createContext<IAuthContext>({
 export const AuthProvider: FunctionComponent = ({ children }): JSX.Element => {
   // default undefined before loading, once loaded provide user or null if logged out
   const [loggedInUser, setLoggedInUser] = useState<User | null | undefined>();
+  const { fetchBoardTitles } = useBoard();
   const history = useHistory();
 
   const updateLoginContext = useCallback(
     (data: AuthApiDataSuccess) => {
       setLoggedInUser(data.user);
+      fetchBoardTitles(data.user);
       history.push('/dashboard');
     },
     [history],
@@ -36,7 +39,7 @@ export const AuthProvider: FunctionComponent = ({ children }): JSX.Element => {
   const updateUser = useCallback(
     async (data: User) => {
       await updateUserAPI(data).then((res) => {
-        if (res.user) setLoggedInUser(res.user);
+        if (res.success) setLoggedInUser(res.success);
         history.push('/dashboard');
       });
     },
