@@ -1,32 +1,31 @@
 import { useState } from 'react';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import initialData from './initial-data';
 import Column from './Column';
 import useStyles from './useStyles';
 
 // eslint-disable-next-line
-const Board = () => {
+const Board = ({ boardData }) => {
   const classes = useStyles();
-  const [data, setData] = useState(initialData);
-  const [taskTitle, setTaskTitle] = useState('');
+  const [data, setData] = useState(boardData);
+  const [cardTitle, setCardTitle] = useState('');
 
-  const handleTaskSubmit = (e) => {
+  const handleCardSubmit = (e) => {
     e.preventDefault();
-    const totalTasksLength = Object.keys(data.tasks).length;
+    const totalCardsLength = Object.keys(data.cards).length;
     const columnId = e.target[0].id;
-    const newTaskId = `task-${totalTasksLength + 1}`;
-    const newTask = { id: newTaskId, title: taskTitle };
+    const newCardId = `card-${totalCardsLength + 1}`;
+    const newCard = { id: newCardId, title: cardTitle };
     const newData = {
       ...data,
-      tasks: {
-        ...data.tasks,
-        [newTaskId]: newTask,
+      cards: {
+        ...data.cards,
+        [newCardId]: newCard,
       },
       columns: {
         ...data.columns,
         [columnId]: {
           ...data.columns[columnId],
-          taskIds: data.columns[columnId].taskIds.concat(newTaskId),
+          cardIds: data.columns[columnId].cardIds.concat(newCardId),
         },
       },
     };
@@ -36,8 +35,8 @@ const Board = () => {
     e.target[0].value = '';
   };
 
-  const handleTaskInput = (e) => {
-    setTaskTitle(e.target.value);
+  const handleCardInput = (e) => {
+    setCardTitle(e.target.value);
   };
 
   const onDragEnd = (result) => {
@@ -69,13 +68,13 @@ const Board = () => {
     const finishColumn = data.columns[destination.droppableId];
 
     if (startColumn === finishColumn) {
-      const newTaskIds = Array.from(startColumn.taskIds);
-      newTaskIds.splice(source.index, 1);
-      newTaskIds.splice(destination.index, 0, draggableId);
+      const newCardIds = Array.from(startColumn.cardIds);
+      newCardIds.splice(source.index, 1);
+      newCardIds.splice(destination.index, 0, draggableId);
 
       const newColumn = {
         ...startColumn,
-        taskIds: newTaskIds,
+        cardIds: newCardIds,
       };
 
       const newData = {
@@ -90,18 +89,18 @@ const Board = () => {
       return;
     }
 
-    const startTaskIds = Array.from(startColumn.taskIds);
-    startTaskIds.splice(source.index, 1);
+    const startCardIds = Array.from(startColumn.cardIds);
+    startCardIds.splice(source.index, 1);
     const newStartColumn = {
       ...startColumn,
-      taskIds: startTaskIds,
+      cardIds: startCardIds,
     };
 
-    const finishTaskIds = Array.from(finishColumn.taskIds);
-    finishTaskIds.splice(destination.index, 0, draggableId);
+    const finishCardIds = Array.from(finishColumn.cardIds);
+    finishCardIds.splice(destination.index, 0, draggableId);
     const newFinishColumn = {
       ...finishColumn,
-      taskIds: finishTaskIds,
+      cardIds: finishCardIds,
     };
 
     const newData = {
@@ -124,15 +123,15 @@ const Board = () => {
           <div {...provided.droppableProps} ref={provided.innerRef} className={classes.boardContainer}>
             {data.columnOrder.map((columnId, index) => {
               const column = data.columns[columnId];
-              const tasks = column.taskIds.map((taskId) => data.tasks[taskId]);
+              const cards = column.cardIds.map((cardId) => data.cards[cardId]);
               return (
                 <Column
                   key={column.id}
                   column={column}
-                  tasks={tasks}
+                  cards={cards}
                   index={index}
-                  handleSubmit={handleTaskSubmit}
-                  handleInput={handleTaskInput}
+                  handleSubmit={handleCardSubmit}
+                  handleInput={handleCardInput}
                 />
               );
             })}

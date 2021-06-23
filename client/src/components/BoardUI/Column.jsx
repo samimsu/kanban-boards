@@ -1,5 +1,5 @@
 // import { useState } from 'react';
-import Task from './Task';
+import Card from './Card';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import useStyles from './useStyles';
 import TextField from '@material-ui/core/TextField';
@@ -8,9 +8,9 @@ import TextField from '@material-ui/core/TextField';
 // const Title = ({ children }) => <h3 className='column-title'>{children}</h3>;
 
 // eslint-disable-next-line
-const Column = ({ column, tasks, index, handleSubmit, handleInput }) => {
+const Column = ({ column, cards, index, handleSubmit, handleInput }) => {
   const classes = useStyles();
-  // const [taskTitle, setTaskTitle] = useState('');
+  // const [cardTitle, setcardTitle] = useState('');
 
   return (
     <Draggable draggableId={column.id} index={index}>
@@ -19,15 +19,15 @@ const Column = ({ column, tasks, index, handleSubmit, handleInput }) => {
           <div {...provided.dragHandleProps} className={classes.columnTitle}>
             {column.title}
           </div>
-          <Droppable droppableId={column.id} type="task">
+          <Droppable droppableId={column.id} type="card">
             {(provided, snapshot) => (
               <div
                 ref={provided.innerRef}
                 {...provided.droppableProps}
-                className={snapshot.isDraggingOver ? classes.taskListDraggingOver : classes.taskList}
+                className={snapshot.isDraggingOver ? classes.cardListDraggingOver : classes.cardList}
               >
-                {tasks.map((task, index) => (
-                  <Task key={task.id} task={task} index={index} />
+                {cards.map((card, index) => (
+                  <Card key={card.id} card={card} index={index} />
                 ))}
                 {provided.placeholder}
               </div>

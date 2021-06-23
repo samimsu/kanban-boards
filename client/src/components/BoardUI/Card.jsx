@@ -4,19 +4,19 @@ import useStyles from './useStyles';
 // const Container = ({ children }) => <div className='task-container'>{children}</div>
 
 // eslint-disable-next-line
-const Task = ({ task, index }) => {
+const Card = ({ card, index }) => {
   const classes = useStyles();
   return (
-    <Draggable draggableId={task.id} index={index}>
+    <Draggable draggableId={card.id} index={index}>
       {(provided, snapshot) => {
         return (
           <div
             {...provided.draggableProps}
             {...provided.dragHandleProps}
             ref={provided.innerRef}
-            className={snapshot.isDragging ? classes.taskContainerDrag : classes.taskContainer}
+            className={snapshot.isDragging ? classes.cardContainerDrag : classes.cardContainer}
           >
-            {task.title}
+            {card.title}
           </div>
         );
       }}
@@ -24,4 +24,4 @@ const Task = ({ task, index }) => {
   );
 };
 
-export default Task;
+export default Card;

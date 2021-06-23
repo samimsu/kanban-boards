@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const taskContainerStyling = {
+const cardContainerStyling = {
   fontWeight: 'bold',
   borderRadius: '10px',
   padding: '20px',
@@ -25,31 +25,31 @@ const useStyles = makeStyles(() => ({
     fontSize: '14px',
     padding: '10px 20px 0px 20px',
   },
-  taskList: {
+  cardList: {
     padding: '8px',
     flexGrow: 1,
     backgroundColor: '#f4f6ff',
     minHeight: '100px',
   },
-  taskListDraggingOver: {
+  cardListDraggingOver: {
     padding: '8px',
     flexGrow: 1,
     backgroundColor: 'skyblue',
     minHeight: '100px',
   },
-  taskContainer: {
-    ...taskContainerStyling,
+  cardContainer: {
+    ...cardContainerStyling,
     backgroundColor: 'white',
   },
-  taskContainerDrag: {
-    ...taskContainerStyling,
+  cardContainerDrag: {
+    ...cardContainerStyling,
     backgroundColor: 'lightgreen',
   },
   addCardField: {
     width: '100%',
     padding: '8px',
     '& .Mui-focused': {
-      ...taskContainerStyling,
+      ...cardContainerStyling,
       backgroundColor: 'white',
     },
   },

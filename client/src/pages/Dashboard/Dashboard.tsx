@@ -13,6 +13,7 @@ import IconButton from '@material-ui/core/IconButton';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import Box from '@material-ui/core/Box';
 import CreateColumnDialog from '../../components/CreateColumnDialog/CreateColumnDialog';
+import initialData from '../../components/BoardUI/initial-data';
 
 export default function Dashboard(): JSX.Element {
   const classes = useStyles();
@@ -46,6 +47,7 @@ export default function Dashboard(): JSX.Element {
     <Grid container component="main" className={`${classes.root} ${classes.dashboard}`}>
       <CssBaseline />
 
+      {console.log('loggedInUser board data', loggedInUser.board)}
       <Grid item xs={12}>
         <DashboardHeader />
         <DashboardAppBar />
@@ -60,7 +62,8 @@ export default function Dashboard(): JSX.Element {
         </Grid>
 
         <Grid item xs={12}>
-          <BoardUI />
+          <BoardUI boardData={initialData} />
+          {console.log('board data', initialData)}
         </Grid>
 
         <Grid item>
