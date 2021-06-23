@@ -11,7 +11,9 @@ import logo from '../../Images/logo.png';
 import useStyles from './useStyles';
 import CreateBoardDialog from '../CreateBoardDialog/CreateBoardDialog';
 import { useAuth } from '../../context/useAuthContext';
+import { useBoard } from '../../context/useBoardContext';
 import { User } from '../../interface/User';
+import { newBoard } from '../../helpers/APICalls/boardAPI';
 import UploadImageWidget from '../../helpers/Image/uploadImage';
 
 interface Props {
@@ -24,6 +26,7 @@ const DashboardHeader = ({ loggedInUser }: Props): JSX.Element => {
   const [createBoardOpen, setCreateBoardOpen] = React.useState(false);
   const open = Boolean(anchorEl);
   const { logout, updateUser } = useAuth();
+  const { fetchBoardTitles } = useBoard();
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -51,7 +54,12 @@ const DashboardHeader = ({ loggedInUser }: Props): JSX.Element => {
     setCreateBoardOpen(true);
   };
 
-  const handleCloseCreateBoard = () => {
+  const handleCloseCreateBoard = (title: string) => {
+    if (title) {
+      newBoard(loggedInUser, title).then(() => {
+        fetchBoardTitles(loggedInUser);
+      });
+    }
     setCreateBoardOpen(false);
   };
 
