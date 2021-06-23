@@ -57,7 +57,7 @@ const DashboardHeader = ({ loggedInUser }: Props): JSX.Element => {
   const handleCloseCreateBoard = (title: string) => {
     if (title) {
       newBoard(loggedInUser, title).then(() => {
-        fetchBoardTitles(loggedInUser);
+        fetchBoardTitles(loggedInUser, true);
       });
     }
     setCreateBoardOpen(false);

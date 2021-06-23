@@ -9,7 +9,7 @@ interface IBoardContext {
   publishBoard: () => void;
   fetchBoard: (id: string) => void;
   boardTitles: string[];
-  fetchBoardTitles: (user: User) => void;
+  fetchBoardTitles: (user: User, force: boolean) => void;
 }
 
 export const BoardContext = createContext<IBoardContext>({
@@ -39,8 +39,8 @@ export const BoardProvider: FunctionComponent = ({ children }): JSX.Element => {
     else throw new Error(data.error ? data.error.message : 'An unknown error occurred');
   };
 
-  const fetchBoardTitles = async (user: User) => {
-    if (boardTitles.length > 0) return;
+  const fetchBoardTitles = async (user: User, force = false) => {
+    if (!force && boardTitles.length > 0) return;
     const data: BoardTitleApiData = await getBoardTitles(user);
     if (data.success) setBoardNames(data.success);
     else throw new Error(data.error ? data.error.message : 'An unknown error occurred');
