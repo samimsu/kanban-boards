@@ -53,7 +53,9 @@ exports.createBoard = asyncHandler(async (req, res, next) => {
 exports.boardTitle = asyncHandler(async (req, res, next) => {
   try {
     const user = await User.findById(req.query.id).populate({path: "boards"}).exec();
-    const titles = user.boards.map(b => b.title || 'Untitled');
+    const titles = user.boards.map(b => {
+        return { id: b._id, title: b.title || 'Untitled' };
+    });
     res.status(200).json({success: titles});
   } catch (err) {
     console.error(err);

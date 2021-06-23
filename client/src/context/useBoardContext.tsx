@@ -1,5 +1,5 @@
 import { useState, useContext, createContext, FunctionComponent } from 'react';
-import { Board, BoardTitleApiData, UpdateBoardApiData } from '../interface/Board';
+import { Board, BoardTitlePair, BoardTitleApiData, UpdateBoardApiData } from '../interface/Board';
 import { User } from '../interface/User';
 import { getBoardTitles, getBoard } from '../helpers/APICalls/boardAPI';
 
@@ -8,7 +8,7 @@ interface IBoardContext {
   setBoard: (data: Board) => void;
   publishBoard: () => void;
   fetchBoard: (id: string) => void;
-  boardTitles: string[];
+  boardTitles: BoardTitlePair[];
   fetchBoardTitles: (user: User, force: boolean) => void;
 }
 
@@ -23,7 +23,7 @@ export const BoardContext = createContext<IBoardContext>({
 
 export const BoardProvider: FunctionComponent = ({ children }): JSX.Element => {
   const [currentBoard, setCurrentBoard] = useState<Board>({ _id: '', title: '', columns: [] });
-  const [boardTitles, setBoardNames] = useState<string[]>([]);
+  const [boardTitles, setBoardNames] = useState<BoardTitlePair[]>([]);
 
   const setBoard = (data: Board) => {
     setCurrentBoard(data);
