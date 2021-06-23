@@ -7,7 +7,7 @@ interface IBoardContext {
   currentBoard: Board;
   setBoard: (data: Board) => void;
   publishBoard: () => void;
-  fetchBoard: (user: User, index: number) => void;
+  fetchBoard: (id: string) => void;
   boardTitles: string[];
   fetchBoardTitles: (user: User) => void;
 }
@@ -33,19 +33,17 @@ export const BoardProvider: FunctionComponent = ({ children }): JSX.Element => {
     console.log(currentBoard);
   };
 
-  const fetchBoard = async (user: User, index: number) => {
-    if (!user.boards || user.boards.length <= index) return;
-    const id = user.boards[index];
-    await getBoard(id).then((data: UpdateBoardApiData) => {
-      if (data.success) setCurrentBoard(data.success);
-    });
+  const fetchBoard = async (id: string) => {
+    const data: UpdateBoardApiData = await getBoard(id);
+    if (data.success) setCurrentBoard(data.success);
+    else throw new Error(data.error ? data.error.message : 'An unknown error occurred');
   };
 
   const fetchBoardTitles = async (user: User) => {
     if (boardTitles.length > 0) return;
-    await getBoardTitles(user).then((data: BoardTitleApiData) => {
-      if (data.success) setBoardNames(data.success.titles);
-    });
+    const data: BoardTitleApiData = await getBoardTitles(user);
+    if (data.success) setBoardNames(data.success);
+    else throw new Error(data.error ? data.error.message : 'An unknown error occurred');
   };
 
   return (
