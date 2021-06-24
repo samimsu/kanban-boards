@@ -4,28 +4,44 @@ import { AuthApiData, AuthApiDataSuccess } from '../interface/AuthApiData';
 import { User } from '../interface/User';
 import loginWithCookies from '../helpers/APICalls/loginWithCookies';
 import logoutAPI from '../helpers/APICalls/logout';
+import updateUserAPI from '../helpers/APICalls/updateUser';
+import { useBoard } from './useBoardContext';
 
 interface IAuthContext {
   loggedInUser: User | null | undefined;
   updateLoginContext: (data: AuthApiDataSuccess) => void;
+  updateUser: (data: User) => void;
   logout: () => void;
 }
 
 export const AuthContext = createContext<IAuthContext>({
   loggedInUser: undefined,
   updateLoginContext: () => null,
+  updateUser: () => null,
   logout: () => null,
 });
 
 export const AuthProvider: FunctionComponent = ({ children }): JSX.Element => {
   // default undefined before loading, once loaded provide user or null if logged out
   const [loggedInUser, setLoggedInUser] = useState<User | null | undefined>();
+  const { fetchBoardTitles } = useBoard();
   const history = useHistory();
 
   const updateLoginContext = useCallback(
     (data: AuthApiDataSuccess) => {
       setLoggedInUser(data.user);
+      fetchBoardTitles(data.user);
       history.push('/dashboard');
+    },
+    [history],
+  );
+
+  const updateUser = useCallback(
+    async (data: User) => {
+      await updateUserAPI(data).then((res) => {
+        if (res.success) setLoggedInUser(res.success);
+        history.push('/dashboard');
+      });
     },
     [history],
   );
@@ -57,7 +73,11 @@ export const AuthProvider: FunctionComponent = ({ children }): JSX.Element => {
     checkLoginWithCookies();
   }, [updateLoginContext, history]);
 
-  return <AuthContext.Provider value={{ loggedInUser, updateLoginContext, logout }}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ loggedInUser, updateLoginContext, updateUser, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export function useAuth(): IAuthContext {

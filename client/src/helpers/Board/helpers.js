@@ -10,8 +10,8 @@ function moveColumn(board, { fromPosition }, { toPosition }) {
 }
 
 function moveCard(board, { fromPosition, fromColumnId }, { toPosition, toColumnId }) {
-  const sourceColumn = board.columns.find((column) => column.id === fromColumnId);
-  const destinationColumn = board.columns.find((column) => column.id === toColumnId);
+  const sourceColumn = board.columns.find((column) => column._id === fromColumnId);
+  const destinationColumn = board.columns.find((column) => column._id === toColumnId);
 
   const reorderColumnsOnBoard = (reorderColumnsMapper) => ({
     ...board,
@@ -20,11 +20,11 @@ function moveCard(board, { fromPosition, fromColumnId }, { toPosition, toColumnI
   const reorderCardsOnSourceColumn = reorderCardsOnColumn.bind(null, sourceColumn);
   const reorderCardsOnDestinationColumn = reorderCardsOnColumn.bind(null, destinationColumn);
 
-  if (sourceColumn.id === destinationColumn.id) {
+  if (sourceColumn._id === destinationColumn._id) {
     const reorderedCardsOnColumn = reorderCardsOnSourceColumn((cards) => {
       return changeElementOfPositionInArray(cards, fromPosition, toPosition);
     });
-    return reorderColumnsOnBoard((column) => (column.id === sourceColumn.id ? reorderedCardsOnColumn : column));
+    return reorderColumnsOnBoard((column) => (column._id === sourceColumn._id ? reorderedCardsOnColumn : column));
   } else {
     const reorderedCardsOnSourceColumn = reorderCardsOnSourceColumn((cards) => {
       return removeFromArrayAtPosition(cards, fromPosition);
@@ -33,8 +33,8 @@ function moveCard(board, { fromPosition, fromColumnId }, { toPosition, toColumnI
       return addInArrayAtPosition(cards, sourceColumn.cards[fromPosition], toPosition);
     });
     return reorderColumnsOnBoard((column) => {
-      if (column.id === sourceColumn.id) return reorderedCardsOnSourceColumn;
-      if (column.id === destinationColumn.id) return reorderedCardsOnDestinationColumn;
+      if (column._id === sourceColumn._id) return reorderedCardsOnSourceColumn;
+      if (column._id === destinationColumn._id) return reorderedCardsOnDestinationColumn;
       return column;
     });
   }

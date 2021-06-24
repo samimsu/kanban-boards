@@ -17,10 +17,14 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   addColumnButton: {
+    color: 'white',
     height: 300,
     width: 50,
     borderRadius: 1,
     backgroundColor: 'lightGrey',
+  },
+  board: {
+    width: '100%',
   },
 }));
 

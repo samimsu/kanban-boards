@@ -1,9 +1,16 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
   authHeader: {
-    alignSelf: 'flex-end',
-    justifyContent: 'flex-end',
+    alignSelf: 'center',
+    justifyContent: 'center',
     alignItems: 'center',
     display: 'flex',
     flexWrap: 'wrap',

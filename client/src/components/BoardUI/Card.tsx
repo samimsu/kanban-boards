@@ -1,7 +1,7 @@
 import { Draggable } from 'react-beautiful-dnd';
 import NaturalDragAnimation from 'natural-drag-animation-rbdnd';
 import useStyles from './useStyles';
-import { CSSProperties, ReactNode, useState } from 'react';
+import { CSSProperties, useState } from 'react';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -14,16 +14,17 @@ import { useTheme } from '@material-ui/core/styles';
 import { useFormik } from 'formik';
 import TextField from '@material-ui/core/TextField';
 import * as yup from 'yup';
+import { Card } from '../../interface/Card';
 
 interface CardProps {
-  children: Record<string, ReactNode>;
+  children: Card;
   index: number;
   renderCard: CallableFunction;
   disableCardDrag: boolean;
   column: string;
 }
 
-function Card({ children, index, renderCard, disableCardDrag, column }: CardProps): JSX.Element {
+function CardUI({ children, index, renderCard, disableCardDrag, column }: CardProps): JSX.Element {
   const [open, setOpen] = useState(false);
   const classes = useStyles();
   const theme = useTheme();
@@ -62,7 +63,7 @@ function Card({ children, index, renderCard, disableCardDrag, column }: CardProp
 
   return (
     <>
-      <Draggable draggableId={String(children.id)} index={index} isDragDisabled={disableCardDrag}>
+      <Draggable draggableId={children._id} index={index} isDragDisabled={disableCardDrag}>
         {(provided, snapshot) => {
           return (
             <NaturalDragAnimation style={provided.draggableProps.style} snapshot={snapshot}>
@@ -71,7 +72,7 @@ function Card({ children, index, renderCard, disableCardDrag, column }: CardProp
                   ref={provided.innerRef}
                   {...provided.draggableProps}
                   {...provided.dragHandleProps}
-                  data-testid={`card-${children.id}`}
+                  data-testid={`card-${children._id}`}
                   style={style}
                   onClick={handleClickOpen}
                 >
@@ -84,12 +85,12 @@ function Card({ children, index, renderCard, disableCardDrag, column }: CardProp
       </Draggable>
       <Dialog
         onClose={handleClose}
-        aria-labelledby={`${children.title}-card-details`}
+        aria-labelledby={`${children.name}-card-details`}
         open={open}
         fullScreen={fullScreen}
       >
-        <DialogTitle id={`${children.title}-card-details`} onClick={handleClose}>
-          {children.title} in list &quot;{column}&quot;
+        <DialogTitle id={`${children.name}-card-details`} onClick={handleClose}>
+          {children.name} in list &quot;{column}&quot;
         </DialogTitle>
         <DialogContent dividers>
           <Grid container spacing={3}>
@@ -196,4 +197,4 @@ function Card({ children, index, renderCard, disableCardDrag, column }: CardProp
   );
 }
 
-export default Card;
+export default CardUI;

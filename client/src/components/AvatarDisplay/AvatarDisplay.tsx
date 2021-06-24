@@ -1,13 +1,15 @@
 import Avatar from '@material-ui/core/Avatar';
 import { User } from '../../interface/User';
+import { MouseEvent } from 'react';
 
 interface Props {
-  loggedIn: boolean;
   user: User;
+  className?: string;
+  onClick?: (event: MouseEvent<HTMLElement>) => void;
 }
 
-const AvatarDisplay = ({ user }: Props): JSX.Element => {
-  return <Avatar alt="Profile Image" src={`https://robohash.org/${user.email}.png`} />;
+const AvatarDisplay = ({ user, className, onClick }: Props): JSX.Element => {
+  return <Avatar className={className} onClick={onClick} alt={user.email} src={user.profilePicture} />;
 };
 
 export default AvatarDisplay;
