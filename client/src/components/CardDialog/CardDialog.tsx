@@ -1,3 +1,4 @@
+import { withStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -51,6 +52,9 @@ const CardDialog = ({ children, open, handleClose, column }: Props): JSX.Element
     },
   });
 
+  const sectionTop = [['Tag'], ['Check-list'], ['Deadline'], ['Attachment'], ['Cover']];
+  const sectionBottom = [['Move'], ['Copy'], ['Share'], ['Delete']];
+
   return (
     <Dialog onClose={handleClose} aria-labelledby={`${children.name}-card-details`} open={open}>
       <Box className={classes.dialog}>
@@ -61,7 +65,7 @@ const CardDialog = ({ children, open, handleClose, column }: Props): JSX.Element
           <Typography className={classes.title}>
             <AssignmentIcon className={classes.icon} /> {children.name}
           </Typography>
-          <Typography>in list &quot;{column}&quot;</Typography>
+          <Typography className={classes.menuText}>in list &quot;{column}&quot;</Typography>
         </DialogTitle>
         <DialogContent dividers>
           <Grid container spacing={3}>
@@ -127,54 +131,43 @@ const CardDialog = ({ children, open, handleClose, column }: Props): JSX.Element
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={4}>
-              <Typography gutterBottom>Add to card:</Typography>
-              <DialogActions>
-                <Button color="secondary" fullWidth variant="contained">
-                  Tag
-                </Button>
-              </DialogActions>
-              <DialogActions>
-                <Button color="secondary" fullWidth variant="contained">
-                  Check-list
-                </Button>
-              </DialogActions>
-              <DialogActions>
-                <Button color="secondary" fullWidth variant="contained">
-                  Deadline
-                </Button>
-              </DialogActions>
-              <DialogActions>
-                <Button color="secondary" fullWidth variant="contained">
-                  Attachment
-                </Button>
-              </DialogActions>
-              <DialogActions>
-                <Button color="secondary" fullWidth variant="contained">
-                  Cover
-                </Button>
-              </DialogActions>
-              <Typography gutterBottom>Actions:</Typography>
-              <DialogActions>
-                <Button color="secondary" fullWidth variant="contained">
-                  Move
-                </Button>
-              </DialogActions>
-              <DialogActions>
-                <Button color="secondary" fullWidth variant="contained">
-                  Copy
-                </Button>
-              </DialogActions>
-              <DialogActions>
-                <Button color="secondary" fullWidth variant="contained">
-                  Share
-                </Button>
-              </DialogActions>
-              <DialogActions>
-                <Button color="secondary" fullWidth variant="contained">
-                  Delete
-                </Button>
-              </DialogActions>
+            <Grid item xs={4} spacing={1}>
+              <Box>
+                <Typography gutterBottom className={classes.menuText}>
+                  ADD TO CARD:
+                </Typography>
+                {sectionTop.map(([name]) => (
+                  <DialogActions key={name}>
+                    <Button
+                      color="secondary"
+                      fullWidth
+                      disableElevation
+                      variant="contained"
+                      className={classes.sideButton}
+                    >
+                      {name}
+                    </Button>
+                  </DialogActions>
+                ))}
+              </Box>
+              <Box>
+                <Typography gutterBottom className={classes.menuText}>
+                  ACTIONS:
+                </Typography>
+                {sectionBottom.map(([name]) => (
+                  <DialogActions key={name}>
+                    <Button
+                      color="secondary"
+                      fullWidth
+                      disableElevation
+                      variant="contained"
+                      className={classes.sideButton}
+                    >
+                      {name}
+                    </Button>
+                  </DialogActions>
+                ))}
+              </Box>
             </Grid>
           </Grid>
         </DialogContent>

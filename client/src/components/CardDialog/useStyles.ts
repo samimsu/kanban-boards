@@ -1,7 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const marginComponent = 15;
-
 const useStyles = makeStyles((theme) => ({
   dialog: {
     margin: 0,
@@ -33,6 +31,15 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     margin: theme.spacing(2),
+  },
+  sideButton: {
+    '&:hover': {
+      backgroundColor: theme.palette.secondary.light,
+    },
+  },
+  menuText: {
+    ...theme.typography.button,
+    color: theme.palette.secondary.contrastText,
   },
 }));
 
