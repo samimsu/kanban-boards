@@ -49,7 +49,7 @@ export default function Dashboard(): JSX.Element {
 
       {console.log('loggedInUser board data', loggedInUser.board)}
       <Grid item xs={12}>
-        <DashboardHeader />
+        <DashboardHeader loggedInUser={loggedInUser} />
         <DashboardAppBar />
       </Grid>
 

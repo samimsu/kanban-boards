@@ -13,7 +13,7 @@ export default function DefaultCard({ children: card, dragging }: DefaultCardPro
     <div className={clsx(classes.card, { [classes.draggingCard]: dragging })}>
       <span>
         <div className={classes.cardTitle}>
-          <span>{card.title}</span>
+          <span>{card.name}</span>
         </div>
       </span>
       <div className={classes.cardDescription}>{card.description}</div>

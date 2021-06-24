@@ -1,14 +1,15 @@
 import React, { useState, CSSProperties } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import NaturalDragAnimation from 'natural-drag-animation-rbdnd';
-import Card from './Card';
+import CardUI from './Card';
 import withDroppable from './withDroppable';
 import { pickPropOut } from '../../helpers/Board/utils';
 import useStyles from './useStyles';
 import CreateCardDialog from '../CreateCardDialog/CreateCardDialog';
+import { Column } from '../../interface/Column';
 
 interface ColumnProps {
-  children: { id: number; title: string; cards: { id: number; title: string; description: string }[] };
+  children: Column;
   index: number;
   renderCard: CallableFunction;
   renderColumnHeader: CallableFunction;
@@ -18,7 +19,7 @@ interface ColumnProps {
   setCardsCount: (count: number) => void;
 }
 
-function Column({
+function ColumnUI({
   children,
   index: columnIndex,
   renderCard,
@@ -60,7 +61,7 @@ function Column({
   };
 
   return (
-    <Draggable draggableId={`column-draggable-${children.id}`} index={columnIndex} isDragDisabled={disableColumnDrag}>
+    <Draggable draggableId={`column-draggable-${children._id}`} index={columnIndex} isDragDisabled={disableColumnDrag}>
       {(columnProvided, snapshot) => {
         {
           console.log('draggable column index', columnIndex);
@@ -78,21 +79,21 @@ function Column({
                   ...style,
                 }}
                 className={classes.column}
-                data-testid={`column-${children.id}`}
+                data-testid={`column-${children._id}`}
               >
                 <div {...columnProvided.dragHandleProps}>{renderColumnHeader(children)}</div>
-                <DroppableColumn droppableId={String(children.id)}>
+                <DroppableColumn droppableId={String(children._id)}>
                   {children.cards.length ? (
                     children.cards.map(
                       (card, index): JSX.Element => (
-                        <Card
-                          key={card.id}
+                        <CardUI
+                          key={card._id}
                           index={index}
                           renderCard={(dragging: boolean) => renderCard(children, card, dragging)}
                           disableCardDrag={disableCardDrag}
                         >
                           {card}
-                        </Card>
+                        </CardUI>
                       ),
                     )
                   ) : (
@@ -114,4 +115,4 @@ function Column({
   );
 }
 
-export default Column;
+export default ColumnUI;

@@ -4,26 +4,47 @@ import Button from '@material-ui/core/Button';
 import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
 import CalendarTodayOutlinedIcon from '@material-ui/icons/CalendarTodayOutlined';
 import AddIcon from '@material-ui/icons/Add';
-import Avatar from '@material-ui/core/Avatar';
+import AvatarDisplay from '../AvatarDisplay/AvatarDisplay';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import logo from '../../Images/logo.png';
 import useStyles from './useStyles';
 import CreateBoardDialog from '../CreateBoardDialog/CreateBoardDialog';
 import { useAuth } from '../../context/useAuthContext';
+import { User } from '../../interface/User';
+import UploadImageWidget from '../../helpers/Image/uploadImage';
 
-const DashboardHeader = (): JSX.Element => {
+interface Props {
+  loggedInUser: User;
+}
+
+const DashboardHeader = ({ loggedInUser }: Props): JSX.Element => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [createBoardOpen, setCreateBoardOpen] = React.useState(false);
   const open = Boolean(anchorEl);
-  const { logout } = useAuth();
+  const { logout, updateUser } = useAuth();
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    handleClose();
+    logout();
+  };
+
+  const openWidget = () => {
+    handleClose();
+    UploadImageWidget('profile', (url: string) => {
+      updateUser({
+        ...loggedInUser,
+        profilePicture: url,
+      });
+    });
   };
 
   const handleClickCreateBoard = () => {
@@ -68,11 +89,9 @@ const DashboardHeader = (): JSX.Element => {
       </Box>
 
       <Box>
-        <Avatar className={classes.avatar} alt="avatar" onClick={handleClick}>
-          S
-        </Avatar>
+        <AvatarDisplay className={classes.avatar} user={loggedInUser} onClick={handleClick} />
         <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-          <MenuItem onClick={handleClose}>Go to profile</MenuItem>
+          <MenuItem onClick={openWidget}>Change profile picture</MenuItem>
           <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>
       </Box>
