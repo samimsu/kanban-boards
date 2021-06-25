@@ -24,19 +24,25 @@ exports.fullBoardById = asyncHandler(async (req, res, next) => {
 exports.updateBoard = asyncHandler(async (req, res, next) => {
   try {
     const newBoard = req.body.board;
+    let updateCards = [];
+    let updateColumns = [];
     if (newBoard.columns) {
-      newBoard.columns.forEach(async column => {
+      updateColumns = newBoard.columns.map(column => {
         if (column.cards) {
-          column.cards.forEach(async card => {
-            await Card.findByIdAndUpdate(card._id, card).exec();
-          });
+          updateCards = updateCards.concat(column.cards.map(card => {
+            return { updateOne: {filter: { _id: card._id }, update: card} };
+          }));
           column.cards = column.cards.map(card => card._id);
         }
-        await Column.findByIdAndUpdate(column._id, column).exec();
-      });
-      newBoard.columns = newBoard.columns.map(column => column._id);
-    }
-    const board = await Board.findByIdAndUpdate(newBoard._id, newBoard).exec();
+      return { updateOne: { filter: { _id: column._id }, update: column } };
+    });
+    newBoard.columns = newBoard.columns.map(column => column._id);
+  }
+  const [board] = await Promise.all([
+    Board.findByIdAndUpdate(newBoard._id, newBoard).exec(),
+    Column.bulkWrite(updateColumns, { ordered: false }),
+    Card.bulkWrite(updateCards, { ordered: false }),
+  ]);
     res.status(200).json({ success: await fullBoard(board) });
   } catch (err) {
     console.error(err);
