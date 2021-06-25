@@ -94,7 +94,7 @@ export default function Dashboard(): JSX.Element {
           <CreateColumnDialog createColumnOpen={createColumnOpen} handleCloseCreateColumn={handleCloseCreateColumn} />
         </Grid>
 
-        <Grid item>
+        <Grid item xs={12}>
           <BoardUI />
         </Grid>
 

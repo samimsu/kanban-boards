@@ -19,12 +19,12 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
     throw new Error("A user with that email already exists");
   }
 
-  const board = await generateBoard('My School Board');
+  const board = await generateBoard("My School Board");
 
   let user = await User.create({
     email,
     password,
-    boards: [ board._id ],
+    boards: [board._id],
   });
 
   if (user) {
@@ -37,7 +37,7 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
     });
 
     res.status(201).json({
-      success: {user: filterUser(user)},
+      success: { user: filterUser(user) },
     });
   } else {
     res.status(400);
@@ -63,7 +63,7 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
     });
 
     res.status(200).json({
-      success: {user: filterUser(user)},
+      success: { user: filterUser(user) },
     });
   } else {
     res.status(401);
@@ -83,7 +83,7 @@ exports.loadUser = asyncHandler(async (req, res, next) => {
   }
 
   res.status(200).json({
-    success: {user: filterUser(user)},
+    success: { user: filterUser(user) },
   });
 });
 
