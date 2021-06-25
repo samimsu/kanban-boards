@@ -9,28 +9,16 @@ import { useEffect, useState } from 'react';
 import DashboardHeader from '../../components/DashboardHeader/DashboardHeader';
 import DashboardAppBar from '../../components/DashboardAppBar/DashboardAppBar';
 import BoardUI from '../../components/BoardUI/BoardUI';
-import IconButton from '@material-ui/core/IconButton';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import Box from '@material-ui/core/Box';
-import CreateColumnDialog from '../../components/CreateColumnDialog/CreateColumnDialog';
-import initialData from '../../components/BoardUI/initial-data';
 
 export default function Dashboard(): JSX.Element {
   const classes = useStyles();
-  const [createColumnOpen, setCreateColumnOpen] = useState(false);
+  const [columnTitle, setColumnTitle] = useState('');
 
   const { loggedInUser } = useAuth();
   const { initSocket } = useSocket();
 
   const history = useHistory();
-
-  const handleClickCreateColumn = () => {
-    setCreateColumnOpen(true);
-  };
-
-  const handleCloseCreateColumn = () => {
-    setCreateColumnOpen(false);
-  };
 
   useEffect(() => {
     initSocket();
@@ -47,29 +35,15 @@ export default function Dashboard(): JSX.Element {
     <Grid container component="main" className={`${classes.root} ${classes.dashboard}`}>
       <CssBaseline />
 
-      {console.log('loggedInUser board data', loggedInUser.board)}
+      {console.log('loggedInUser board data', loggedInUser.boards)}
       <Grid item xs={12}>
         <DashboardHeader loggedInUser={loggedInUser} />
         <DashboardAppBar />
       </Grid>
 
       <Box className={classes.board} display={'flex'} justifyContent={'space-between'}>
-        <Grid item>
-          <IconButton className={classes.addColumnButton} onClick={handleClickCreateColumn}>
-            <AddCircleOutlineIcon fontSize="large" />
-          </IconButton>
-          <CreateColumnDialog createColumnOpen={createColumnOpen} handleCloseCreateColumn={handleCloseCreateColumn} />
-        </Grid>
-
         <Grid item xs={12}>
-          <BoardUI boardData={initialData} />
-          {console.log('board data', initialData)}
-        </Grid>
-
-        <Grid item>
-          <IconButton className={classes.addColumnButton} onClick={handleClickCreateColumn}>
-            <AddCircleOutlineIcon fontSize="large" />
-          </IconButton>
+          <BoardUI />
         </Grid>
       </Box>
     </Grid>

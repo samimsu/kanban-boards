@@ -2,34 +2,73 @@ import { useState } from 'react';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import Column from './Column';
 import useStyles from './useStyles';
+import IconButton from '@material-ui/core/IconButton';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import CreateColumnDialog from '../CreateColumnDialog/CreateColumnDialog';
 
 // eslint-disable-next-line
 const Board = ({ boardData }) => {
   const classes = useStyles();
-  const [data, setData] = useState(boardData);
+  const [board, setBoard] = useState(boardData);
   const [cardTitle, setCardTitle] = useState('');
+  const [columnTitle, setColumnTitle] = useState('');
+  const [createColumnOpen, setCreateColumnOpen] = useState(false);
+
+  const handleClickCreateColumn = () => {
+    setCreateColumnOpen(true);
+  };
+
+  const handleCloseCreateColumn = () => {
+    setCreateColumnOpen(false);
+  };
+
+  // eslint-disable-next-line
+  const handleColumnInput = (e) => {
+    setColumnTitle(e.target.value);
+  };
+
+  // eslint-disable-next-line
+  const handleColumnOnSubmit = (e) => {
+    e.preventDefault();
+    console.log(columnTitle);
+    const totalColumnsLength = board.columnOrder.length;
+    const newColumnId = `column-${totalColumnsLength + 1}`;
+    const newColumn = { id: newColumnId, _id: newColumnId, title: columnTitle, cardIds: [] };
+    console.log('columns length', totalColumnsLength);
+    const newData = {
+      ...board,
+      columns: {
+        ...board.columns,
+        [newColumnId]: newColumn,
+      },
+      columnOrder: board.columnOrder.concat(newColumnId),
+    };
+    console.log(newData);
+    setBoard(newData);
+    handleCloseCreateColumn();
+  };
 
   const handleCardSubmit = (e) => {
     e.preventDefault();
-    const totalCardsLength = Object.keys(data.cards).length;
+    const totalCardsLength = Object.keys(board.cards).length;
     const columnId = e.target[0].id;
     const newCardId = `card-${totalCardsLength + 1}`;
     const newCard = { id: newCardId, title: cardTitle };
     const newData = {
-      ...data,
+      ...board,
       cards: {
-        ...data.cards,
+        ...board.cards,
         [newCardId]: newCard,
       },
       columns: {
-        ...data.columns,
+        ...board.columns,
         [columnId]: {
-          ...data.columns[columnId],
-          cardIds: data.columns[columnId].cardIds.concat(newCardId),
+          ...board.columns[columnId],
+          cardIds: board.columns[columnId].cardIds.concat(newCardId),
         },
       },
     };
-    setData(newData);
+    setBoard(newData);
     console.log(e);
     console.log(e.target[0].value);
     e.target[0].value = '';
@@ -51,21 +90,21 @@ const Board = ({ boardData }) => {
     }
 
     if (type === 'column') {
-      const newColumnOrder = Array.from(data.columnOrder);
+      const newColumnOrder = Array.from(board.columnOrder);
       newColumnOrder.splice(source.index, 1);
       newColumnOrder.splice(destination.index, 0, draggableId);
 
       const newBoard = {
-        ...data,
+        ...board,
         columnOrder: newColumnOrder,
       };
 
-      setData(newBoard);
+      setBoard(newBoard);
       return;
     }
 
-    const startColumn = data.columns[source.droppableId];
-    const finishColumn = data.columns[destination.droppableId];
+    const startColumn = board.columns[source.droppableId];
+    const finishColumn = board.columns[destination.droppableId];
 
     if (startColumn === finishColumn) {
       const newCardIds = Array.from(startColumn.cardIds);
@@ -78,14 +117,14 @@ const Board = ({ boardData }) => {
       };
 
       const newData = {
-        ...data,
+        ...board,
         columns: {
-          ...data.columns,
+          ...board.columns,
           [newColumn.id]: newColumn,
         },
       };
 
-      setData(newData);
+      setBoard(newData);
       return;
     }
 
@@ -104,26 +143,35 @@ const Board = ({ boardData }) => {
     };
 
     const newData = {
-      ...data,
+      ...board,
       columns: {
-        ...data.columns,
+        ...board.columns,
         [newStartColumn.id]: newStartColumn,
         [newFinishColumn.id]: newFinishColumn,
       },
     };
 
-    setData(newData);
+    setBoard(newData);
     return;
   };
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
+      <IconButton onClick={handleClickCreateColumn}>
+        <AddCircleOutlineIcon fontSize="large" />
+      </IconButton>
+      <CreateColumnDialog
+        createColumnOpen={createColumnOpen}
+        handleCloseCreateColumn={handleCloseCreateColumn}
+        handleInput={handleColumnInput}
+        handleOnSubmit={handleColumnOnSubmit}
+      />
       <Droppable droppableId="board" direction="horizontal" type="column">
         {(provided) => (
           <div {...provided.droppableProps} ref={provided.innerRef} className={classes.boardContainer}>
-            {data.columnOrder.map((columnId, index) => {
-              const column = data.columns[columnId];
-              const cards = column.cardIds.map((cardId) => data.cards[cardId]);
+            {board.columnOrder.map((columnId, index) => {
+              const column = board.columns[columnId];
+              const cards = column.cardIds.map((cardId) => board.cards[cardId]);
               return (
                 <Column
                   key={column.id}
